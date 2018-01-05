@@ -47,3 +47,26 @@ func (t TParam) IsMax() bool {
 func (t TParam) Value() float64 {
     return t.value
 }
+
+/* Functions */
+
+// Subdivides a given range of t parameters a given number of times, resulting
+// in a times + 1 size slice.
+func SubdivideTimes(startT, endT TParam, times int) []TParam {
+    tParams := make([]TParam, times + 1)
+    step := startT.DistanceTo(endT) / float64(times)
+
+    if startT.Value() < endT.Value() {
+        tParams[0] = startT
+        tParams[times] = endT
+    } else {
+        tParams[0] = endT
+        tParams[times] = startT
+    }
+
+    for i := 1; i < times; i++ {
+        tParams[i] = TParam{tParams[i - 1].Value() + step}
+    }
+
+    return tParams
+}
