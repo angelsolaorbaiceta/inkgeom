@@ -6,8 +6,13 @@ import (
 )
 
 const (
-    MIN_T = 0.0
-    MAX_T = 1.0
+    MIN_T_VALUE = 0.0
+    MAX_T_VALUE = 1.0
+)
+
+var (
+    MIN_T = TParam{MIN_T_VALUE}
+    MAX_T = TParam{MAX_T_VALUE}
 )
 
 type TParam struct {
@@ -17,10 +22,10 @@ type TParam struct {
 /* Construction */
 func MakeTParam(value float64) TParam {
     switch {
-    case value < MIN_T:
-        return TParam{MIN_T}
-    case value > MAX_T:
-        return TParam{MAX_T}
+    case value < MIN_T_VALUE:
+        return MIN_T
+    case value > MAX_T_VALUE:
+        return MAX_T
     default:
         return TParam{value}
     }
@@ -35,13 +40,21 @@ func (t TParam) DistanceTo(other TParam) float64 {
     return math.Abs(t.value - other.value)
 }
 
+func (t TParam) IsGreaterThan(other TParam) bool {
+    return t.value > other.value
+}
+
+func (t TParam) IsLessThan(other TParam) bool {
+    return !t.IsGreaterThan(other)
+}
+
 /* Properties */
 func (t TParam) IsMin() bool {
-    return inkmath.FuzzyEqual(t.value, MIN_T)
+    return inkmath.FuzzyEqual(t.value, MIN_T_VALUE)
 }
 
 func (t TParam) IsMax() bool {
-    return inkmath.FuzzyEqual(t.value, MAX_T)
+    return inkmath.FuzzyEqual(t.value, MAX_T_VALUE)
 }
 
 func (t TParam) Value() float64 {
@@ -52,11 +65,11 @@ func (t TParam) Value() float64 {
 
 // Subdivides a given range of t parameters a given number of times, resulting
 // in a times + 1 size slice.
-func SubdivideTimes(startT, endT TParam, times int) []TParam {
+func SubTParamRangeTimes(startT, endT TParam, times int) []TParam {
     tParams := make([]TParam, times + 1)
     step := startT.DistanceTo(endT) / float64(times)
 
-    if startT.Value() < endT.Value() {
+    if startT.IsLessThan(endT) {
         tParams[0] = startT
         tParams[times] = endT
     } else {
@@ -69,4 +82,8 @@ func SubdivideTimes(startT, endT TParam, times int) []TParam {
     }
 
     return tParams
+}
+
+func SubTParamCompleteRangeTimes(times int) []TParam {
+    return SubTParamRangeTimes(MIN_T, MAX_T, times)
 }

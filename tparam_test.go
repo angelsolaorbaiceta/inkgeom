@@ -2,7 +2,6 @@ package inkgeom
 
 import (
     "testing"
-    // "github.com/angelsolaorbaiceta/inkmath"
 )
 
 func TestDistanceBetweenTParams(t *testing.T)  {
@@ -15,7 +14,7 @@ func TestDistanceBetweenTParams(t *testing.T)  {
 
 func TestSubdivideRange(t *testing.T) {
     t1, t2 := MakeTParam(0.5), MakeTParam(0.7)
-    vals := SubdivideTimes(t1, t2, 2)
+    vals := SubTParamRangeTimes(t1, t2, 2)
 
     if len(vals) != 3 {
         t.Error("Range subdivided wrong number of times")

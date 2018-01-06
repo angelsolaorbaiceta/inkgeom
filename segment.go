@@ -29,8 +29,8 @@ func (s Segment) LengthBetween(startT, endT TParam) float64 {
 
 func (s Segment) PointAt(t TParam) Projectable {
     return MakePoint(
-        inkmath.LinInterpol(MIN_T, s.Start.X, MAX_T, s.End.X, t.Value()),
-        inkmath.LinInterpol(MIN_T, s.Start.Y, MAX_T, s.End.Y, t.Value()))
+        inkmath.LinInterpol(MIN_T_VALUE, s.Start.X, MAX_T_VALUE, s.End.X, t.Value()),
+        inkmath.LinInterpol(MIN_T_VALUE, s.Start.Y, MAX_T_VALUE, s.End.Y, t.Value()))
 }
 
 func (s Segment) DirectionVersor() Projectable {
