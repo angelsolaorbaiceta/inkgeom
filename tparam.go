@@ -70,9 +70,31 @@ func (t TParam) IsMax() bool {
 	return inkmath.FuzzyEqual(t.value, MAX_T_VALUE)
 }
 
+// IsExtreme returns true if this T parameter's value is either minimum or maximum.
+func (t TParam) IsExtreme() bool {
+	return t.IsMax() || t.IsMin()
+}
+
 // Value returns the value of the parameter.
 func (t TParam) Value() float64 {
 	return t.value
+}
+
+/* sort.Interface */
+
+// ByTParamValue implements sort.Interface for []TParam based on the value field.
+type ByTParamValue []TParam
+
+func (a ByTParamValue) Len() int {
+	return len(a)
+}
+
+func (a ByTParamValue) Swap(i, j int) {
+	a[i], a[j] = a[j], a[i]
+}
+
+func (a ByTParamValue) Less(i, j int) bool {
+	return a[i].value < a[j].value
 }
 
 /* Functions */
