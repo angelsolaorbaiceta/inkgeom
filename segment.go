@@ -51,3 +51,9 @@ func (s Segment) DirectionVersor() Projectable {
 func (s Segment) NormalVersor() Projectable {
 	return s.DirectionVersor().Perpendicular()
 }
+
+// RefFrame returns the reference frame of the segment.
+// Reference Frame i's versor points in the direction of the direction versor.
+func (s Segment) RefFrame() RefFrame {
+	return MakeRefFrameWithIVersor(s.DirectionVersor())
+}
