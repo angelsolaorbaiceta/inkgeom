@@ -7,13 +7,15 @@ import (
 )
 
 const (
-	MIN_T_VALUE = 0.0
-	MAX_T_VALUE = 1.0
+	minTValue = 0.0
+	maxTValue = 1.0
 )
 
 var (
-	MIN_T = TParam{MIN_T_VALUE}
-	MAX_T = TParam{MAX_T_VALUE}
+	// MinT is the smallest T parameter
+	MinT = TParam{minTValue}
+	// MaxT is the biggest T Parameter
+	MaxT = TParam{maxTValue}
 )
 
 // TParam is a parameter which takes values between two ends [min, max].
@@ -27,10 +29,10 @@ type TParam struct {
 // If the value is out of range, it is approximated to the closest end.
 func MakeTParam(value float64) TParam {
 	switch {
-	case value < MIN_T_VALUE:
-		return MIN_T
-	case value > MAX_T_VALUE:
-		return MAX_T
+	case value < minTValue:
+		return MinT
+	case value > maxTValue:
+		return MaxT
 	default:
 		return TParam{value}
 	}
@@ -62,12 +64,12 @@ func (t TParam) IsLessThan(other TParam) bool {
 
 // IsMin returns true if this T parameter's value is the minimum value allowed.
 func (t TParam) IsMin() bool {
-	return inkmath.FuzzyEqual(t.value, MIN_T_VALUE)
+	return inkmath.FuzzyEqual(t.value, minTValue)
 }
 
 // IsMax returns true if this T parameter's value is the maximum value allowed.
 func (t TParam) IsMax() bool {
-	return inkmath.FuzzyEqual(t.value, MAX_T_VALUE)
+	return inkmath.FuzzyEqual(t.value, maxTValue)
 }
 
 // IsExtreme returns true if this T parameter's value is either minimum or maximum.
@@ -123,5 +125,5 @@ func SubTParamRangeTimes(startT, endT TParam, times int) []TParam {
 // SubTParamCompleteRangeTimes subdivides the entire range of [t_min, t_max] a
 // given number of times.
 func SubTParamCompleteRangeTimes(times int) []TParam {
-	return SubTParamRangeTimes(MIN_T, MAX_T, times)
+	return SubTParamRangeTimes(MinT, MaxT, times)
 }

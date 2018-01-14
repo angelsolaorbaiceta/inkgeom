@@ -5,13 +5,13 @@ import (
 )
 
 func TestTParamIsMin(t *testing.T) {
-	if !MIN_T.IsMin() {
+	if !MinT.IsMin() {
 		t.Error("Expected T parameter to be min")
 	}
 }
 
 func TestTParamIsMax(t *testing.T) {
-	if !MAX_T.IsMax() {
+	if !MaxT.IsMax() {
 		t.Error("Expected T parameter to be max")
 	}
 }

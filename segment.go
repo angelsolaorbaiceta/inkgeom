@@ -38,8 +38,8 @@ func (s Segment) LengthBetween(startT, endT TParam) float64 {
 // PointAt computes an intermediate point in the segment.
 func (s Segment) PointAt(t TParam) Projectable {
 	return MakePoint(
-		inkmath.LinInterpol(MIN_T_VALUE, s.Start.X, MAX_T_VALUE, s.End.X, t.Value()),
-		inkmath.LinInterpol(MIN_T_VALUE, s.Start.Y, MAX_T_VALUE, s.End.Y, t.Value()))
+		inkmath.LinInterpol(minTValue, s.Start.X, maxTValue, s.End.X, t.Value()),
+		inkmath.LinInterpol(minTValue, s.Start.Y, maxTValue, s.End.Y, t.Value()))
 }
 
 // DirectionVersor computes the versor which points in the advancing direction of the segment [start -> end].
