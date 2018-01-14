@@ -11,7 +11,7 @@ type Projectable struct {
 	X, Y float64
 }
 
-/* Construction */
+/* ::::::::::::::: Construction ::::::::::::::: */
 
 // MakePoint creates a new point.
 func MakePoint(x, y float64) Projectable {
@@ -34,7 +34,7 @@ func MakeVersor(x, y float64) Projectable {
 	return Projectable{x / norm, y / norm}
 }
 
-/* Properties */
+/* ::::::::::::::: Properties ::::::::::::::: */
 
 // Norm returns the magnitude of the vector.
 func (p Projectable) Norm() float64 {
@@ -46,7 +46,7 @@ func (p Projectable) IsVersor() bool {
 	return inkmath.FuzzyEqual(p.Norm(), 1.0)
 }
 
-/* Methods */
+/* ::::::::::::::: Methods ::::::::::::::: */
 
 // Equals returns true if the projections of this and other projectable are equal.
 func (p Projectable) Equals(other Projectable) bool {
@@ -69,7 +69,7 @@ func (p Projectable) Perpendicular() Projectable {
 	return MakeVector(-p.Y, p.X)
 }
 
-/* Operations */
+/* ::::::::::::::: Operations ::::::::::::::: */
 
 // Plus creates a new projectable adding this with other.
 func (p Projectable) Plus(other Projectable) Projectable {
@@ -91,7 +91,31 @@ func (p Projectable) CrossTimes(other Projectable) float64 {
 	return (p.X * other.Y) - (p.Y * other.X)
 }
 
-/* Utils */
+/* ::::::::::::::: Utils ::::::::::::::: */
 func normForProjs(x, y float64) float64 {
 	return math.Sqrt(x*x + y*y)
+}
+
+/* ::::::::::::::: Comparing ::::::::::::::: */
+
+/*
+Compare returns -1 if this node goes before the other, 0 if they are equal and 1 if
+this node goes after the other.
+*/
+func (p Projectable) Compare(other Projectable) int {
+	if p.Equals(other) {
+		return 0
+	}
+
+	if inkmath.FuzzyEqual(p.X, other.X) {
+		if p.Y < other.Y {
+			return -1
+		}
+		return 1
+	}
+
+	if p.X < other.X {
+		return -1
+	}
+	return 1
 }
