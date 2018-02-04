@@ -69,6 +69,11 @@ func (p Projectable) Perpendicular() Projectable {
 	return MakeVector(-p.Y, p.X)
 }
 
+// Scaled creates a new vector with the projections scaled the given factor.
+func (p Projectable) Scaled(factor float64) Projectable {
+	return MakeVector(p.X*factor, p.Y*factor)
+}
+
 /* ::::::::::::::: Operations ::::::::::::::: */
 
 // Plus creates a new projectable adding this with other.

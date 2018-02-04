@@ -7,6 +7,7 @@ import (
 	"github.com/angelsolaorbaiceta/inkmath"
 )
 
+/* <--------------- Creation ---------------> */
 func TestJVersor(t *testing.T) {
 	i := MakeVersor(1, 1)
 	frame := MakeRefFrameWithIVersor(i)
@@ -16,6 +17,7 @@ func TestJVersor(t *testing.T) {
 	}
 }
 
+/* <--------------- Projection ---------------> */
 func TestProjectVector(t *testing.T) {
 	v := MakeVector(2, 3)
 	proj := MakeVector(5.0/math.Sqrt2, 1.0/math.Sqrt2)
@@ -26,6 +28,17 @@ func TestProjectVector(t *testing.T) {
 	}
 }
 
+func TestProjectLocalVectorInGlobal(t *testing.T) {
+	v := MakeVector(5.0/math.Sqrt2, 1.0/math.Sqrt2)
+	proj := MakeVector(2, 3)
+	frame := MakeRefFrameWithIVersor(MakeVersor(1, 1))
+
+	if !frame.ProjectVectorToGlobal(v).Equals(proj) {
+		t.Error("Projected vector not as expected")
+	}
+}
+
+/* <--------------- Sine & Cosine ---------------> */
 func TestPositiveCosine(t *testing.T) {
 	i := MakeVersor(1, 1)
 	frame := MakeRefFrameWithIVersor(i)

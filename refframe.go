@@ -27,7 +27,28 @@ func MakeRefFrameWithIVersor(iVersor Projectable) RefFrame {
 
 // ProjectVector returns the projection of a vector (given in global coordinates) in this reference frame.
 func (r RefFrame) ProjectVector(p Projectable) Projectable {
-	return MakePoint(p.DotTimes(r.iVersor), p.DotTimes(r.jVersor))
+	return MakeVector(p.DotTimes(r.iVersor), p.DotTimes(r.jVersor))
+}
+
+/*
+ProjectVectorToGlobal returns the projection of a local vector (vector projected in this reference frame),
+in the global reference frame.
+*/
+func (r RefFrame) ProjectVectorToGlobal(p Projectable) Projectable {
+	return r.ProjectionsToGlobal(p.X, p.Y)
+}
+
+/*
+ProjectionsToGlobal returns the projection of a local vector (vector projected in this reference frame),
+in the global reference frame.
+*/
+func (r RefFrame) ProjectionsToGlobal(xProj, yProj float64) Projectable {
+	var (
+		x = r.iVersor.Scaled(xProj)
+		y = r.jVersor.Scaled(yProj)
+	)
+
+	return x.Plus(y)
 }
 
 /*
