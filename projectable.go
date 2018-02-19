@@ -1,6 +1,7 @@
 package inkgeom
 
 import (
+	"fmt"
 	"math"
 
 	"github.com/angelsolaorbaiceta/inkmath"
@@ -123,4 +124,12 @@ func (p Projectable) Compare(other Projectable) int {
 		return -1
 	}
 	return 1
+}
+
+/* ::::::::::::::: Stringer ::::::::::::::: */
+func (p Projectable) String() string {
+	return fmt.Sprintf(
+		"{%f, %f}",
+		p.X, p.Y,
+	)
 }
