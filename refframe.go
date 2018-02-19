@@ -31,6 +31,14 @@ func (r RefFrame) ProjectVector(p Projectable) Projectable {
 }
 
 /*
+ProjectProjections returns the projectio of a vector given by its projections in global
+coordinates in this reference frame.
+*/
+func (r RefFrame) ProjectProjections(xProj, yProj float64) Projectable {
+	return r.ProjectVector(MakeVector(xProj, yProj))
+}
+
+/*
 ProjectVectorToGlobal returns the projection of a local vector (vector projected in this reference frame),
 in the global reference frame.
 */
