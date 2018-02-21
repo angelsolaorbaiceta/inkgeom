@@ -38,6 +38,11 @@ func MakeTParam(value float64) TParam {
 	}
 }
 
+// AverageT creates a new T parameter which value is the average of the given two.
+func AverageT(a, b TParam) TParam {
+	return MakeTParam((a.value + b.value) / 2.0)
+}
+
 /* ::::::::::::::: Methods ::::::::::::::: */
 
 // Equals compares the given t parameters and returns true if their values are equal.
