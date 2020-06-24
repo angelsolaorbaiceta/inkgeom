@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/angelsolaorbaiceta/inkmath"
+	"github.com/angelsolaorbaiceta/inkmath/nums"
 )
 
 // Projectable is an entity with projections both in X and Y axis.
@@ -44,14 +44,14 @@ func (p Projectable) Norm() float64 {
 
 // IsVersor returns true if the vector has a norm of 1.
 func (p Projectable) IsVersor() bool {
-	return inkmath.FuzzyEqual(p.Norm(), 1.0)
+	return nums.FuzzyEqual(p.Norm(), 1.0)
 }
 
 /* ::::::::::::::: Methods ::::::::::::::: */
 
 // Equals returns true if the projections of this and other projectable are equal.
 func (p Projectable) Equals(other Projectable) bool {
-	return inkmath.FuzzyEqual(p.X, other.X) && inkmath.FuzzyEqual(p.Y, other.Y)
+	return nums.FuzzyEqual(p.X, other.X) && nums.FuzzyEqual(p.Y, other.Y)
 }
 
 // DistanceTo computes the distance between two points.
@@ -113,7 +113,7 @@ func (p Projectable) Compare(other Projectable) int {
 		return 0
 	}
 
-	if inkmath.FuzzyEqual(p.X, other.X) {
+	if nums.FuzzyEqual(p.X, other.X) {
 		if p.Y < other.Y {
 			return -1
 		}
@@ -127,9 +127,7 @@ func (p Projectable) Compare(other Projectable) int {
 }
 
 /* ::::::::::::::: Stringer ::::::::::::::: */
+
 func (p Projectable) String() string {
-	return fmt.Sprintf(
-		"{%f, %f}",
-		p.X, p.Y,
-	)
+	return fmt.Sprintf("{%f, %f}", p.X, p.Y)
 }

@@ -3,7 +3,7 @@ package inkgeom
 import (
 	"math"
 
-	"github.com/angelsolaorbaiceta/inkmath"
+	"github.com/angelsolaorbaiceta/inkmath/nums"
 )
 
 const (
@@ -47,7 +47,7 @@ func AverageT(a, b TParam) TParam {
 
 // Equals compares the given t parameters and returns true if their values are equal.
 func (t TParam) Equals(other TParam) bool {
-	return inkmath.FuzzyEqual(t.value, other.value)
+	return nums.FuzzyEqual(t.value, other.value)
 }
 
 // DistanceTo computes the distance between the values of two T parameters.
@@ -69,12 +69,12 @@ func (t TParam) IsLessThan(other TParam) bool {
 
 // IsMin returns true if this T parameter's value is the minimum value allowed.
 func (t TParam) IsMin() bool {
-	return inkmath.FuzzyEqual(t.value, minTValue)
+	return nums.FuzzyEqual(t.value, minTValue)
 }
 
 // IsMax returns true if this T parameter's value is the maximum value allowed.
 func (t TParam) IsMax() bool {
-	return inkmath.FuzzyEqual(t.value, maxTValue)
+	return nums.FuzzyEqual(t.value, maxTValue)
 }
 
 // IsExtreme returns true if this T parameter's value is either minimum or maximum.

@@ -4,7 +4,7 @@ import (
 	"math"
 	"testing"
 
-	"github.com/angelsolaorbaiceta/inkmath"
+	"github.com/angelsolaorbaiceta/inkmath/nums"
 )
 
 /* <--------------- Creation ---------------> */
@@ -44,7 +44,7 @@ func TestPositiveCosine(t *testing.T) {
 	frame := MakeRefFrameWithIVersor(i)
 	expectedCos := math.Sqrt2 / 2.0
 
-	if cos := frame.Cos(); !inkmath.FuzzyEqual(cos, expectedCos) {
+	if cos := frame.Cos(); !nums.FuzzyEqual(cos, expectedCos) {
 		t.Errorf("Wrong cosine, expected %f, but got %f", expectedCos, cos)
 	}
 }
@@ -54,7 +54,7 @@ func TestNegativeCosine(t *testing.T) {
 	frame := MakeRefFrameWithIVersor(i)
 	expectedCos := -math.Sqrt2 / 2.0
 
-	if cos := frame.Cos(); !inkmath.FuzzyEqual(cos, expectedCos) {
+	if cos := frame.Cos(); !nums.FuzzyEqual(cos, expectedCos) {
 		t.Errorf("Wrong cosine, expected %f, but got %f", expectedCos, cos)
 	}
 }
@@ -64,7 +64,7 @@ func TestPositiveSine(t *testing.T) {
 	frame := MakeRefFrameWithIVersor(i)
 	expectedSin := math.Sqrt2 / 2.0
 
-	if sin := frame.Sin(); !inkmath.FuzzyEqual(sin, expectedSin) {
+	if sin := frame.Sin(); !nums.FuzzyEqual(sin, expectedSin) {
 		t.Errorf("Wrong sine, expected %f, but got %f", expectedSin, sin)
 	}
 }
@@ -74,7 +74,7 @@ func TestNegativeSine(t *testing.T) {
 	frame := MakeRefFrameWithIVersor(i)
 	expectedSin := -math.Sqrt2 / 2.0
 
-	if sin := frame.Sin(); !inkmath.FuzzyEqual(sin, expectedSin) {
+	if sin := frame.Sin(); !nums.FuzzyEqual(sin, expectedSin) {
 		t.Errorf("Wrong sine, expected %f, but got %f", expectedSin, sin)
 	}
 }

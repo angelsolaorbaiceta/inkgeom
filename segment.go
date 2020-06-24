@@ -1,7 +1,7 @@
 package inkgeom
 
 import (
-	"github.com/angelsolaorbaiceta/inkmath"
+	"github.com/angelsolaorbaiceta/inkmath/nums"
 )
 
 // Segment is a line between two points.
@@ -38,8 +38,8 @@ func (s Segment) LengthBetween(startT, endT TParam) float64 {
 // PointAt computes an intermediate point in the segment.
 func (s Segment) PointAt(t TParam) Projectable {
 	return MakePoint(
-		inkmath.LinInterpol(minTValue, s.Start.X, maxTValue, s.End.X, t.Value()),
-		inkmath.LinInterpol(minTValue, s.Start.Y, maxTValue, s.End.Y, t.Value()))
+		nums.LinInterpol(minTValue, s.Start.X, maxTValue, s.End.X, t.Value()),
+		nums.LinInterpol(minTValue, s.Start.Y, maxTValue, s.End.Y, t.Value()))
 }
 
 // DirectionVersor computes the versor which points in the advancing direction of the segment [start -> end].
