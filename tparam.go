@@ -8,12 +8,15 @@ import (
 
 const (
 	minTValue = 0.0
+	halfTVaue = 0.5
 	maxTValue = 1.0
 )
 
 var (
 	// MinT is the smallest T parameter
 	MinT = TParam{minTValue}
+	// HalfT is the average between min and max T values
+	HalfT = TParam{halfTVaue}
 	// MaxT is the biggest T Parameter
 	MaxT = TParam{maxTValue}
 )
