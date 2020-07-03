@@ -1,4 +1,4 @@
-package inkgeom
+package g2d
 
 var (
 	globalIVersor = MakeVersor(1, 0)
