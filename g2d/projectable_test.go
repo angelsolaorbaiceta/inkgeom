@@ -3,7 +3,7 @@ package inkgeom
 import (
 	"testing"
 
-	"github.com/angelsolaorbaiceta/inkmath/nums"
+	"github.com/angelsolaorbaiceta/inkgeom"
 )
 
 func TestHasProjections(t *testing.T) {
@@ -22,14 +22,14 @@ func TestDistance(t *testing.T) {
 	p, q := MakePoint(1, 2), MakePoint(4, 6)
 	dist := p.DistanceTo(q)
 
-	if !nums.FuzzyEqual(dist, 5.0) {
+	if !inkgeom.FloatsEqual(dist, 5.0) {
 		t.Error("Wrong distance between points")
 	}
 }
 
 func TestVectorNorm(t *testing.T) {
 	v := MakeVector(3, 4)
-	if !nums.FuzzyEqual(v.Norm(), 5.0) {
+	if !inkgeom.FloatsEqual(v.Norm(), 5.0) {
 		t.Error("Wrong vector norm")
 	}
 }
@@ -79,14 +79,14 @@ func TestSubtractVectors(t *testing.T) {
 
 func TestVectorsDotProduct(t *testing.T) {
 	p := MakeVector(1, 2).DotTimes(MakeVector(3, 5))
-	if !nums.FuzzyEqual(p, 13.0) {
+	if !inkgeom.FloatsEqual(p, 13.0) {
 		t.Error("Dot product yielded wrong result")
 	}
 }
 
 func TestVectorsCrossProduct(t *testing.T) {
 	p := MakeVector(1, 2).CrossTimes(MakeVector(3, 5))
-	if !nums.FuzzyEqual(p, -1.0) {
+	if !inkgeom.FloatsEqual(p, -1.0) {
 		t.Error("Cross product yielded wrong result")
 	}
 }

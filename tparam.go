@@ -2,8 +2,6 @@ package inkgeom
 
 import (
 	"math"
-
-	"github.com/angelsolaorbaiceta/inkmath/nums"
 )
 
 const (
@@ -21,15 +19,20 @@ var (
 	MaxT = TParam{maxTValue}
 )
 
-// TParam is a parameter which takes values between two ends [min, max].
+/*
+A TParam is a parameter which takes values between in the range [0, 1].
+*/
 type TParam struct {
 	value float64
 }
 
 /* <-- Construction --> */
 
-// MakeTParam returns a new T parameter with the given value.
-// If the value is out of range, it is approximated to the closest end.
+/*
+MakeTParam returns a new T parameter with the given value.
+
+If the value is out of range, it is approximated to the closest end.
+*/
 func MakeTParam(value float64) TParam {
 	switch {
 	case value < minTValue:
@@ -41,58 +44,78 @@ func MakeTParam(value float64) TParam {
 	}
 }
 
-// AverageT creates a new T parameter which value is the average of the given two.
+/*
+AverageT creates a new T parameter which value is the average of the given two.
+*/
 func AverageT(a, b TParam) TParam {
 	return MakeTParam((a.value + b.value) / 2.0)
 }
 
 /* <-- Methods --> */
 
-// Equals compares the given t parameters and returns true if their values are equal.
+/*
+Equals compares the given t parameters and returns true if their values are equal.
+*/
 func (t TParam) Equals(other TParam) bool {
-	return nums.FuzzyEqual(t.value, other.value)
+	return FloatsEqual(t.value, other.value)
 }
 
-// DistanceTo computes the distance between the values of two T parameters.
+/*
+DistanceTo computes the distance between the values of two T parameters.
+*/
 func (t TParam) DistanceTo(other TParam) float64 {
 	return math.Abs(t.value - other.value)
 }
 
-// IsGreaterThan returns true if this t parameter's value is greater than the other's.
+/*
+IsGreaterThan returns true if this t parameter's value is greater than the other's.
+*/
 func (t TParam) IsGreaterThan(other TParam) bool {
 	return t.value > other.value
 }
 
-// IsLessThan returns true if this t parameter's value is smaller than the other's.
+/*
+IsLessThan returns true if this t parameter's value is smaller than the other's.
+*/
 func (t TParam) IsLessThan(other TParam) bool {
 	return !t.IsGreaterThan(other)
 }
 
 /* <-- Properties --> */
 
-// IsMin returns true if this T parameter's value is the minimum value allowed.
+/*
+IsMin returns true if this T parameter's value is the minimum value allowed.
+*/
 func (t TParam) IsMin() bool {
-	return nums.FuzzyEqual(t.value, minTValue)
+	return FloatsEqual(t.value, minTValue)
 }
 
-// IsMax returns true if this T parameter's value is the maximum value allowed.
+/*
+IsMax returns true if this T parameter's value is the maximum value allowed.
+*/
 func (t TParam) IsMax() bool {
-	return nums.FuzzyEqual(t.value, maxTValue)
+	return FloatsEqual(t.value, maxTValue)
 }
 
-// IsExtreme returns true if this T parameter's value is either minimum or maximum.
+/*
+IsExtreme returns true if this T parameter's value is either minimum or maximum.
+*/
 func (t TParam) IsExtreme() bool {
 	return t.IsMax() || t.IsMin()
 }
 
-// Value returns the value of the parameter.
+/*
+Value returns the value of the parameter.
+*/
 func (t TParam) Value() float64 {
 	return t.value
 }
 
 /* <-- sort.Interface --> */
 
-// ByTParamValue implements sort.Interface for []TParam based on the value field.
+/*
+ByTParamValue implements sort.Interface for []TParam based on the value field.
+*/
 type ByTParamValue []TParam
 
 func (a ByTParamValue) Len() int {
@@ -109,8 +132,10 @@ func (a ByTParamValue) Less(i, j int) bool {
 
 /* <-- Functions --> */
 
-// SubTParamRangeTimes subdivides a given range of t parameters a given number of times, resulting
-// in a times + 1 size slice.
+/*
+SubTParamRangeTimes subdivides a given range of t parameters a given number of times,
+resulting in a times + 1 size slice.
+*/
 func SubTParamRangeTimes(startT, endT TParam, times int) []TParam {
 	tParams := make([]TParam, times+1)
 	step := startT.DistanceTo(endT) / float64(times)
@@ -130,8 +155,10 @@ func SubTParamRangeTimes(startT, endT TParam, times int) []TParam {
 	return tParams
 }
 
-// SubTParamCompleteRangeTimes subdivides the entire range of [t_min, t_max] a
-// given number of times.
+/*
+SubTParamCompleteRangeTimes subdivides the entire range of [t_min, t_max] a
+given number of times.
+*/
 func SubTParamCompleteRangeTimes(times int) []TParam {
 	return SubTParamRangeTimes(MinT, MaxT, times)
 }

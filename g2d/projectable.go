@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/angelsolaorbaiceta/inkmath/nums"
+	"github.com/angelsolaorbaiceta/inkgeom"
 )
 
 /*
@@ -62,7 +62,7 @@ func (p Projectable) Norm() float64 {
 IsVersor returns true if the vector has a norm of 1.
 */
 func (p Projectable) IsVersor() bool {
-	return nums.FuzzyEqual(p.Norm(), 1.0)
+	return inkgeom.FloatsEqual(p.Norm(), 1.0)
 }
 
 /* <-- Methods --> */
@@ -71,7 +71,7 @@ func (p Projectable) IsVersor() bool {
 Equals returns true if the projections of this and other projectable are equal.
 */
 func (p Projectable) Equals(other Projectable) bool {
-	return nums.FuzzyEqual(p.X, other.X) && nums.FuzzyEqual(p.Y, other.Y)
+	return inkgeom.FloatsEqual(p.X, other.X) && inkgeom.FloatsEqual(p.Y, other.Y)
 }
 
 /*
@@ -149,7 +149,7 @@ func (p Projectable) Compare(other Projectable) int {
 		return 0
 	}
 
-	if nums.FuzzyEqual(p.X, other.X) {
+	if inkgeom.FloatsEqual(p.X, other.X) {
 		if p.Y < other.Y {
 			return -1
 		}

@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/angelsolaorbaiceta/inkgeom"
-	"github.com/angelsolaorbaiceta/inkmath/nums"
 )
 
 func TestMakeSegmentFromCoords(t *testing.T) {
@@ -29,7 +28,7 @@ func TestSegmentLength(t *testing.T) {
 	p, q := MakePoint(1, 2), MakePoint(4, 6)
 	seg := MakeSegment(p, q)
 
-	if !nums.FuzzyEqual(seg.Length(), 5.0) {
+	if !inkgeom.FloatsEqual(seg.Length(), 5.0) {
 		t.Error("Wrong segment length")
 	}
 }
@@ -39,7 +38,7 @@ func TestSegmentLengthBetweenPositions(t *testing.T) {
 	st, et := inkgeom.MakeTParam(0.25), inkgeom.MakeTParam(0.75)
 	seg := MakeSegment(p, q)
 
-	if !nums.FuzzyEqual(seg.LengthBetween(st, et), 2.5) {
+	if !inkgeom.FloatsEqual(seg.LengthBetween(st, et), 2.5) {
 		t.Error("Wrong segment length")
 	}
 }

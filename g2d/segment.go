@@ -2,7 +2,6 @@ package inkgeom
 
 import (
 	"github.com/angelsolaorbaiceta/inkgeom"
-	"github.com/angelsolaorbaiceta/inkmath/nums"
 )
 
 /*
@@ -57,8 +56,8 @@ func (s Segment) PointAt(t inkgeom.TParam) Projectable {
 	)
 
 	return MakePoint(
-		nums.LinInterpol(minTVal, s.Start.X, maxTVal, s.End.X, t.Value()),
-		nums.LinInterpol(minTVal, s.Start.Y, maxTVal, s.End.Y, t.Value()),
+		inkgeom.LinInterpol(minTVal, s.Start.X, maxTVal, s.End.X, t.Value()),
+		inkgeom.LinInterpol(minTVal, s.Start.Y, maxTVal, s.End.Y, t.Value()),
 	)
 }
 
