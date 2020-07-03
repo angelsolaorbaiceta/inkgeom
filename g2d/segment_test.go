@@ -3,6 +3,7 @@ package inkgeom
 import (
 	"testing"
 
+	"github.com/angelsolaorbaiceta/inkgeom"
 	"github.com/angelsolaorbaiceta/inkmath/nums"
 )
 
@@ -35,7 +36,7 @@ func TestSegmentLength(t *testing.T) {
 
 func TestSegmentLengthBetweenPositions(t *testing.T) {
 	p, q := MakePoint(1, 2), MakePoint(4, 6)
-	st, et := MakeTParam(0.25), MakeTParam(0.75)
+	st, et := inkgeom.MakeTParam(0.25), inkgeom.MakeTParam(0.75)
 	seg := MakeSegment(p, q)
 
 	if !nums.FuzzyEqual(seg.LengthBetween(st, et), 2.5) {
@@ -45,7 +46,7 @@ func TestSegmentLengthBetweenPositions(t *testing.T) {
 
 func TestPointAtPosition(t *testing.T) {
 	seg := MakeSegment(MakePoint(1, 1), MakePoint(3, 5))
-	pos := MakeTParam(0.5)
+	pos := inkgeom.MakeTParam(0.5)
 	expectedPoint := MakePoint(2, 3)
 
 	if !seg.PointAt(pos).Equals(expectedPoint) {

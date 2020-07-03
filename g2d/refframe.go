@@ -12,7 +12,7 @@ type RefFrame struct {
 	iVersor, jVersor Projectable
 }
 
-/* ::::::::::::::: Construction ::::::::::::::: */
+/* <-- Construction --> */
 
 /*
 MakeRefFrameWithIVersor returns a reference frame with unitary and normal versors from
@@ -23,7 +23,7 @@ func MakeRefFrameWithIVersor(iVersor Projectable) RefFrame {
 	return RefFrame{iVersor: i, jVersor: i.Perpendicular()}
 }
 
-/* ::::::::::::::: Methods ::::::::::::::: */
+/* <-- Methods --> */
 
 // ProjectVector returns the projection of a vector (given in global coordinates) in this reference frame.
 func (r RefFrame) ProjectVector(p Projectable) Projectable {

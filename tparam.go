@@ -26,7 +26,7 @@ type TParam struct {
 	value float64
 }
 
-/* ::::::::::::::: Construction ::::::::::::::: */
+/* <-- Construction --> */
 
 // MakeTParam returns a new T parameter with the given value.
 // If the value is out of range, it is approximated to the closest end.
@@ -46,7 +46,7 @@ func AverageT(a, b TParam) TParam {
 	return MakeTParam((a.value + b.value) / 2.0)
 }
 
-/* ::::::::::::::: Methods ::::::::::::::: */
+/* <-- Methods --> */
 
 // Equals compares the given t parameters and returns true if their values are equal.
 func (t TParam) Equals(other TParam) bool {
@@ -68,7 +68,7 @@ func (t TParam) IsLessThan(other TParam) bool {
 	return !t.IsGreaterThan(other)
 }
 
-/* ::::::::::::::: Properties ::::::::::::::: */
+/* <-- Properties --> */
 
 // IsMin returns true if this T parameter's value is the minimum value allowed.
 func (t TParam) IsMin() bool {
@@ -90,7 +90,7 @@ func (t TParam) Value() float64 {
 	return t.value
 }
 
-/* ::::::::::::::: sort.Interface ::::::::::::::: */
+/* <-- sort.Interface --> */
 
 // ByTParamValue implements sort.Interface for []TParam based on the value field.
 type ByTParamValue []TParam
@@ -107,7 +107,7 @@ func (a ByTParamValue) Less(i, j int) bool {
 	return a[i].value < a[j].value
 }
 
-/* ::::::::::::::: Functions ::::::::::::::: */
+/* <-- Functions --> */
 
 // SubTParamRangeTimes subdivides a given range of t parameters a given number of times, resulting
 // in a times + 1 size slice.
