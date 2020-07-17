@@ -34,6 +34,7 @@ func TestTParamIsMax(t *testing.T) {
 
 func TestTParamsEqual(t *testing.T) {
 	t1, t2 := MakeTParam(0.34), MakeTParam(0.34)
+
 	if !t1.Equals(t2) {
 		t.Error("Expected t parameters to be equal")
 	}
@@ -41,6 +42,7 @@ func TestTParamsEqual(t *testing.T) {
 
 func TestTParamsNotEqual(t *testing.T) {
 	t1, t2 := MakeTParam(0.34), MakeTParam(0.35)
+
 	if t1.Equals(t2) {
 		t.Error("Expected t parameters to be equal")
 	}
@@ -63,5 +65,42 @@ func TestSubdivideRange(t *testing.T) {
 	}
 	if vals[0].Value() != 0.5 || vals[1].Value() != 0.6 || vals[2].Value() != 0.7 {
 		t.Error("Wrong values for t parameter")
+	}
+}
+
+func TestGreaterOrLessThan(t *testing.T) {
+	t1, t2 := MakeTParam(0.5), MakeTParam(0.7)
+
+	t.Run("is less than", func(t *testing.T) {
+		if !t1.IsLessThan(t2) {
+			t.Error("Expected t1 < t2")
+		}
+	})
+
+	t.Run("is greater than", func(t *testing.T) {
+		if !t2.IsGreaterThan(t1) {
+			t.Error("Expected t2 > t1")
+		}
+	})
+
+	t.Run("is equal", func(t *testing.T) {
+		if t1.IsLessThan(t1) {
+			t.Error("Expected t1 == t1")
+		}
+		if t1.IsGreaterThan(t1) {
+			t.Error("Expected t1 == t1")
+		}
+	})
+}
+
+func TestAverageT(t *testing.T) {
+	var (
+		t1   = MakeTParam(0.25)
+		t2   = MakeTParam(0.75)
+		want = MakeTParam(0.5)
+	)
+
+	if got := AverageT(t1, t2); !got.Equals(want) {
+		t.Errorf("Want average to be %v, got %v", want, got)
 	}
 }

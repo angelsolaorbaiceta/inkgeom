@@ -64,7 +64,7 @@ func MakeTParam(value float64) TParam {
 AverageT creates a new T parameter which value is the average of the given two.
 */
 func AverageT(a, b TParam) TParam {
-	return MakeTParam((a.value + b.value) / 2.0)
+	return MakeTParam(0.5 * (a.value + b.value))
 }
 
 /* <-- Methods --> */
@@ -94,7 +94,7 @@ func (t TParam) IsGreaterThan(other TParam) bool {
 IsLessThan returns true if this t parameter's value is smaller than the other's.
 */
 func (t TParam) IsLessThan(other TParam) bool {
-	return !t.IsGreaterThan(other)
+	return t.value < other.value
 }
 
 /* <-- Properties --> */
