@@ -1,6 +1,9 @@
 package g3d
 
-import "testing"
+import (
+	"math"
+	"testing"
+)
 
 func TestCreateProjectable(t *testing.T) {
 	var (
@@ -25,6 +28,14 @@ func TestCreateProjectable(t *testing.T) {
 	t.Run("has a Z projection", func(t *testing.T) {
 		if got := p.Z(); got != z {
 			t.Errorf("Want Z = %f, got %f", z, got)
+		}
+	})
+
+	t.Run("has a length", func(t *testing.T) {
+		want := math.Sqrt(x*x + y*y + z*z)
+
+		if got := p.Length(); got != want {
+			t.Errorf("Want length = %f, got %f", want, got)
 		}
 	})
 }

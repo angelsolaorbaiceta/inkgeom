@@ -32,21 +32,11 @@ func MakeVectorFromTo(from, to Projectable) Projectable {
 
 // MakeVersor creates a vector with unitary norm following the direction of the given projections.
 func MakeVersor(x, y float64) Projectable {
-	norm := normForProjs(x, y)
-	return Projectable{x / norm, y / norm}
+	length := computeLength(x, y)
+	return Projectable{x / length, y / length}
 }
 
 /* <-- Properties --> */
-
-// Norm returns the magnitude of the vector.
-func (p Projectable) Norm() float64 {
-	return normForProjs(p.x, p.y)
-}
-
-// IsVersor returns true if the vector has a norm of 1.
-func (p Projectable) IsVersor() bool {
-	return inkgeom.FloatsEqual(p.Norm(), 1.0)
-}
 
 func (p Projectable) X() float64 {
 	return p.x
@@ -54,6 +44,16 @@ func (p Projectable) X() float64 {
 
 func (p Projectable) Y() float64 {
 	return p.y
+}
+
+// Length returns the magnitude of the vector.
+func (p Projectable) Length() float64 {
+	return computeLength(p.x, p.y)
+}
+
+// IsVersor returns true if the vector has a length of 1.
+func (p Projectable) IsVersor() bool {
+	return inkgeom.FloatsEqual(p.Length(), 1.0)
 }
 
 /* <-- Methods --> */
@@ -111,7 +111,8 @@ func (p Projectable) CrossTimes(other Projectable) float64 {
 }
 
 /* <-- Utils --> */
-func normForProjs(x, y float64) float64 {
+
+func computeLength(x, y float64) float64 {
 	return math.Sqrt(x*x + y*y)
 }
 

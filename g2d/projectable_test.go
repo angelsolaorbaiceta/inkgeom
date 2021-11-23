@@ -6,9 +6,11 @@ import (
 	"github.com/angelsolaorbaiceta/inkgeom"
 )
 
-func TestHasProjections(t *testing.T) {
-	x, y := 2.0, 3.0
-	proj := MakePoint(x, y)
+func TestProjections(t *testing.T) {
+	var (
+		x, y = 2.0, 3.0
+		proj = MakePoint(x, y)
+	)
 
 	if proj.X() != x {
 		t.Error("Projectable has wrong X projection")
@@ -19,17 +21,20 @@ func TestHasProjections(t *testing.T) {
 }
 
 func TestDistance(t *testing.T) {
-	p, q := MakePoint(1, 2), MakePoint(4, 6)
-	dist := p.DistanceTo(q)
+	var (
+		p    = MakePoint(1, 2)
+		q    = MakePoint(4, 6)
+		dist = p.DistanceTo(q)
+	)
 
 	if !inkgeom.FloatsEqual(dist, 5.0) {
 		t.Error("Wrong distance between points")
 	}
 }
 
-func TestVectorNorm(t *testing.T) {
+func TestVectorLength(t *testing.T) {
 	v := MakeVector(3, 4)
-	if !inkgeom.FloatsEqual(v.Norm(), 5.0) {
+	if !inkgeom.FloatsEqual(v.Length(), 5.0) {
 		t.Error("Wrong vector norm")
 	}
 }
