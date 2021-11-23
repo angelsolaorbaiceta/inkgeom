@@ -61,6 +61,11 @@ func (p *Projectable) IsVersor() bool {
 
 /* <-- Methods --> */
 
+// Opposite returns a new vector in the opposite direction as this one.
+func (p *Projectable) Opposite() *Projectable {
+	return MakeVector(-p.x, -p.y, -p.z)
+}
+
 // ToVersor returns a versor with the same direction as this vector.
 func (p *Projectable) ToVersor() *Projectable {
 	if p.IsVersor() {
@@ -68,6 +73,49 @@ func (p *Projectable) ToVersor() *Projectable {
 	}
 
 	return MakeVersor(p.x, p.y, p.y)
+}
+
+// Equals evaluates to true if the two projectables have identical X, Y and Z projections.
+func (p *Projectable) Equals(other *Projectable) bool {
+	return nums.FloatsEqual(p.x, other.x) &&
+		nums.FloatsEqual(p.y, other.y) &&
+		nums.FloatsEqual(p.z, other.z)
+}
+
+/* <-- Operations --> */
+
+// Plus creates a new projectable adding this with other.
+func (addend *Projectable) Plus(augend *Projectable) *Projectable {
+	return MakeVector(
+		addend.x+augend.x,
+		addend.y+augend.y,
+		addend.z+augend.z,
+	)
+}
+
+// Minus creates a new projectable subtracting this with other.
+func (minuend *Projectable) Minus(subtrahend *Projectable) *Projectable {
+	return MakeVector(
+		minuend.x-subtrahend.x,
+		minuend.y-subtrahend.y,
+		minuend.z-subtrahend.z,
+	)
+}
+
+// DotTimes computes the dot product of this vector with other.
+func (multiplicand *Projectable) DotTimes(multiplier *Projectable) float64 {
+	return (multiplicand.x * multiplier.x) +
+		(multiplicand.y * multiplier.y) +
+		(multiplicand.z * multiplier.z)
+}
+
+// CrossTimes computes the cross product of this vector with other.
+func (u *Projectable) CrossTimes(v *Projectable) *Projectable {
+	return MakeVector(
+		(u.y*v.z)-(u.z*v.y),
+		(u.z*v.x)-(u.x*v.z),
+		(u.x*v.y)-(u.y*v.x),
+	)
 }
 
 /* <-- Utils --> */
