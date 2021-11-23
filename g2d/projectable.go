@@ -7,6 +7,11 @@ import (
 	"github.com/angelsolaorbaiceta/inkgeom/nums"
 )
 
+var (
+	IVersor = MakeVersor(1, 0)
+	JVersor = MakeVersor(0, 1)
+)
+
 /*
 Projectable is an entity with projections both in the X and Y axis.
 Used to represent both points and vectors in two dimensions.
@@ -74,8 +79,12 @@ func (p Projectable) DistanceTo(other Projectable) float64 {
 	return math.Sqrt(deltaX*deltaX + deltaY*deltaY)
 }
 
-// ToVersor returns a versor with the same direction as the vector.
+// ToVersor returns a versor with the same direction as this vector.
 func (p Projectable) ToVersor() Projectable {
+	if p.IsVersor() {
+		return p
+	}
+
 	return MakeVersor(p.x, p.y)
 }
 

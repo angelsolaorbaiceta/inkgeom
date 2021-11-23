@@ -1,13 +1,6 @@
 package g2d
 
-var (
-	globalIVersor = MakeVersor(1, 0)
-	globalJVersor = MakeVersor(0, 1)
-)
-
-/*
-RefFrame represents an orthonormal reference frame.
-*/
+// RefFrame represents an orthonormal reference frame in two dimensions.
 type RefFrame struct {
 	iVersor, jVersor Projectable
 }
@@ -65,7 +58,7 @@ Cos returns the cosine of the angle between:
 	- global frame i's versor.
 */
 func (r RefFrame) Cos() float64 {
-	return r.iVersor.DotTimes(globalIVersor)
+	return r.iVersor.DotTimes(IVersor)
 }
 
 /*
@@ -74,5 +67,5 @@ Sin returns the sine of the angle between:
 	- global frame's i versor
 */
 func (r RefFrame) Sin() float64 {
-	return r.iVersor.DotTimes(globalJVersor)
+	return r.iVersor.DotTimes(JVersor)
 }

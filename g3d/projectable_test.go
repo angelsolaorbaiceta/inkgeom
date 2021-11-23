@@ -61,4 +61,16 @@ func TestVersor(t *testing.T) {
 			t.Error("Expected the vector to be a versor")
 		}
 	})
+
+	t.Run("As versor", func(t *testing.T) {
+		vector := MakeVector(x, y, z)
+
+		if vector.IsVersor() {
+			t.Error("Expected the vector to not have unitary length")
+		}
+
+		if !vector.ToVersor().IsVersor() {
+			t.Error("A versor should have unitary length")
+		}
+	})
 }
