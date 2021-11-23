@@ -10,10 +10,10 @@ func TestHasProjections(t *testing.T) {
 	x, y := 2.0, 3.0
 	proj := MakePoint(x, y)
 
-	if proj.X != x {
+	if proj.X() != x {
 		t.Error("Projectable has wrong X projection")
 	}
-	if proj.Y != y {
+	if proj.Y() != y {
 		t.Error("Projectable has wrong Y projection")
 	}
 }

@@ -14,36 +14,25 @@ Used to represent both points and vectors, which make you responsible for knowin
 what each instance of the Projectable struct is.
 */
 type Projectable struct {
-	X, Y float64
+	x, y float64
 }
 
-/* <-- Construction --> */
-
-/*
-MakePoint creates a new point.
-*/
+// MakePoint creates a new point.
 func MakePoint(x, y float64) Projectable {
 	return Projectable{x, y}
 }
 
-/*
-MakeVector creates a new vector.
-*/
+// MakeVector creates a new vector.
 func MakeVector(x, y float64) Projectable {
 	return Projectable{x, y}
 }
 
-/*
-MakeVectorFromTo creates a new vector which goes from one point to another.
-*/
+// MakeVectorFromTo creates a new vector which goes from one point to another.
 func MakeVectorFromTo(from, to Projectable) Projectable {
-	return Projectable{to.X - from.X, to.Y - from.Y}
+	return Projectable{to.x - from.x, to.y - from.y}
 }
 
-/*
-MakeVersor creates a vector with unitary norm following the direction of the given
-projections.
-*/
+// MakeVersor creates a vector with unitary norm following the direction of the given projections.
 func MakeVersor(x, y float64) Projectable {
 	norm := normForProjs(x, y)
 	return Projectable{x / norm, y / norm}
@@ -51,86 +40,78 @@ func MakeVersor(x, y float64) Projectable {
 
 /* <-- Properties --> */
 
-/*
-Norm returns the magnitude of the vector.
-*/
+// Norm returns the magnitude of the vector.
 func (p Projectable) Norm() float64 {
-	return normForProjs(p.X, p.Y)
+	return normForProjs(p.x, p.y)
 }
 
-/*
-IsVersor returns true if the vector has a norm of 1.
-*/
+// IsVersor returns true if the vector has a norm of 1.
 func (p Projectable) IsVersor() bool {
 	return inkgeom.FloatsEqual(p.Norm(), 1.0)
 }
 
-/* <-- Methods --> */
-
-/*
-Equals returns true if the projections of this and other projectable are equal.
-*/
-func (p Projectable) Equals(other Projectable) bool {
-	return inkgeom.FloatsEqual(p.X, other.X) && inkgeom.FloatsEqual(p.Y, other.Y)
+// X is the projection on the horizontal axis.
+func (p Projectable) X() float64 {
+	return p.x
 }
 
-/*
-DistanceTo computes the distance between two points.
-*/
+// Y is the projection on the vertical axis.
+func (p Projectable) Y() float64 {
+	return p.y
+}
+
+/* <-- Methods --> */
+
+// Equals returns true if the projections of this and other projectable are equal.
+func (p Projectable) Equals(other Projectable) bool {
+	return inkgeom.FloatsEqual(p.x, other.x) && inkgeom.FloatsEqual(p.y, other.y)
+}
+
+// DistanceTo computes the distance between two points.
 func (p Projectable) DistanceTo(other Projectable) float64 {
-	deltaX, deltaY := p.X-other.X, p.Y-other.Y
+	var (
+		deltaX = p.x - other.x
+		deltaY = p.y - other.y
+	)
+
 	return math.Sqrt(deltaX*deltaX + deltaY*deltaY)
 }
 
-/*
-ToVersor returns a versor with the same direction as the vector.
-*/
+// ToVersor returns a versor with the same direction as the vector.
 func (p Projectable) ToVersor() Projectable {
-	return MakeVersor(p.X, p.Y)
+	return MakeVersor(p.x, p.y)
 }
 
-/*
-Perpendicular returns the vector result of rotating PI/2 radians this one.
-*/
+// Perpendicular returns the vector result of rotating PI/2 radians this one.
 func (p Projectable) Perpendicular() Projectable {
-	return MakeVector(-p.Y, p.X)
+	return MakeVector(-p.y, p.x)
 }
 
-/*
-Scaled creates a new vector with the projections scaled the given factor.
-*/
+// Scaled creates a new vector with the projections scaled the given factor.
 func (p Projectable) Scaled(factor float64) Projectable {
-	return MakeVector(p.X*factor, p.Y*factor)
+	return MakeVector(p.x*factor, p.y*factor)
 }
 
 /* <-- Operations --> */
 
-/*
-Plus creates a new projectable adding this with other.
-*/
+// Plus creates a new projectable adding this with other.
 func (p Projectable) Plus(other Projectable) Projectable {
-	return MakeVector(p.X+other.X, p.Y+other.Y)
+	return MakeVector(p.x+other.x, p.y+other.y)
 }
 
-/*
-Minus creates a new projectable subtracting this with other.
-*/
+// Minus creates a new projectable subtracting this with other.
 func (p Projectable) Minus(other Projectable) Projectable {
-	return MakeVector(p.X-other.X, p.Y-other.Y)
+	return MakeVector(p.x-other.x, p.y-other.y)
 }
 
-/*
-DotTimes computes the dot product of this vector with other.
-*/
+// DotTimes computes the dot product of this vector with other.
 func (p Projectable) DotTimes(other Projectable) float64 {
-	return (p.X * other.X) + (p.Y * other.Y)
+	return (p.x * other.x) + (p.y * other.y)
 }
 
-/*
-CrossTimes computes the cross product of this vector with other.
-*/
+// CrossTimes computes the cross product of this vector with other.
 func (p Projectable) CrossTimes(other Projectable) float64 {
-	return (p.X * other.Y) - (p.Y * other.X)
+	return (p.x * other.y) - (p.y * other.x)
 }
 
 /* <-- Utils --> */
@@ -149,14 +130,14 @@ func (p Projectable) Compare(other Projectable) int {
 		return 0
 	}
 
-	if inkgeom.FloatsEqual(p.X, other.X) {
-		if p.Y < other.Y {
+	if inkgeom.FloatsEqual(p.x, other.x) {
+		if p.y < other.y {
 			return -1
 		}
 		return 1
 	}
 
-	if p.X < other.X {
+	if p.x < other.x {
 		return -1
 	}
 	return 1
@@ -165,5 +146,5 @@ func (p Projectable) Compare(other Projectable) int {
 /* <-- Stringer --> */
 
 func (p Projectable) String() string {
-	return fmt.Sprintf("{%f, %f}", p.X, p.Y)
+	return fmt.Sprintf("{%f, %f}", p.x, p.y)
 }

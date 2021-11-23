@@ -43,7 +43,7 @@ ProjectVectorToGlobal returns the projection of a local vector (vector projected
 in the global reference frame.
 */
 func (r RefFrame) ProjectVectorToGlobal(p Projectable) Projectable {
-	return r.ProjectionsToGlobal(p.X, p.Y)
+	return r.ProjectionsToGlobal(p.X(), p.Y())
 }
 
 /*
