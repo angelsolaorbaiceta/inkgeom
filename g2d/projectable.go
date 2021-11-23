@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/angelsolaorbaiceta/inkgeom"
+	"github.com/angelsolaorbaiceta/inkgeom/nums"
 )
 
 /*
@@ -53,15 +53,15 @@ func (p Projectable) Length() float64 {
 
 // IsVersor returns true if the vector has a length of 1.
 func (p Projectable) IsVersor() bool {
-	return inkgeom.IsCloseToOne(p.Length())
+	return nums.IsCloseToOne(p.Length())
 }
 
 /* <-- Methods --> */
 
 // Equals returns true if the projections of this and other projectable are equal.
 func (p Projectable) Equals(other Projectable) bool {
-	return inkgeom.FloatsEqual(p.x, other.x) &&
-		inkgeom.FloatsEqual(p.y, other.y)
+	return nums.FloatsEqual(p.x, other.x) &&
+		nums.FloatsEqual(p.y, other.y)
 }
 
 // DistanceTo computes the distance between two points.
@@ -128,7 +128,7 @@ func (p Projectable) Compare(other Projectable) int {
 		return 0
 	}
 
-	if inkgeom.FloatsEqual(p.x, other.x) {
+	if nums.FloatsEqual(p.x, other.x) {
 		if p.y < other.y {
 			return -1
 		}

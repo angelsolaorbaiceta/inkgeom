@@ -4,7 +4,7 @@ import (
 	"math"
 	"testing"
 
-	"github.com/angelsolaorbaiceta/inkgeom"
+	"github.com/angelsolaorbaiceta/inkgeom/nums"
 )
 
 func TestCreateProjectable(t *testing.T) {
@@ -51,7 +51,7 @@ func TestVersor(t *testing.T) {
 	)
 
 	t.Run("has unit length", func(t *testing.T) {
-		if !inkgeom.IsCloseToOne(v.Length()) {
+		if !nums.IsCloseToOne(v.Length()) {
 			t.Errorf("Expected %f to be 1.0", v.Length())
 		}
 	})

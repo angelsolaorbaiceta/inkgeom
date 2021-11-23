@@ -1,4 +1,4 @@
-package inkgeom
+package nums
 
 import "testing"
 

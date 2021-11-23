@@ -1,7 +1,7 @@
 package g2d
 
 import (
-	"github.com/angelsolaorbaiceta/inkgeom"
+	"github.com/angelsolaorbaiceta/inkgeom/nums"
 )
 
 // A Segment is a line between two points.
@@ -31,20 +31,20 @@ func (s Segment) Length() float64 {
 /* <-- Methods--> */
 
 // LengthBetween computes the length of a portion of the segment between two given t values.
-func (s Segment) LengthBetween(startT, endT inkgeom.TParam) float64 {
+func (s Segment) LengthBetween(startT, endT nums.TParam) float64 {
 	return s.Length() * startT.DistanceTo(endT)
 }
 
 // PointAt computes an intermediate point in the segment.
-func (s Segment) PointAt(t inkgeom.TParam) Projectable {
+func (s Segment) PointAt(t nums.TParam) Projectable {
 	var (
-		minTVal = inkgeom.MinT.Value()
-		maxTVal = inkgeom.MaxT.Value()
+		minTVal = nums.MinT.Value()
+		maxTVal = nums.MaxT.Value()
 	)
 
 	return MakePoint(
-		inkgeom.LinInterpol(minTVal, s.Start.X(), maxTVal, s.End.X(), t.Value()),
-		inkgeom.LinInterpol(minTVal, s.Start.Y(), maxTVal, s.End.Y(), t.Value()),
+		nums.LinInterpol(minTVal, s.Start.X(), maxTVal, s.End.X(), t.Value()),
+		nums.LinInterpol(minTVal, s.Start.Y(), maxTVal, s.End.Y(), t.Value()),
 	)
 }
 

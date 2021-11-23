@@ -1,4 +1,4 @@
-package inkgeom
+package nums
 
 /*
 ByTParamValue implements sort.Interface for []TParam based on the value field.

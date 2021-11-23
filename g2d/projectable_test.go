@@ -3,7 +3,7 @@ package g2d
 import (
 	"testing"
 
-	"github.com/angelsolaorbaiceta/inkgeom"
+	"github.com/angelsolaorbaiceta/inkgeom/nums"
 )
 
 func TestProjections(t *testing.T) {
@@ -27,14 +27,14 @@ func TestDistance(t *testing.T) {
 		dist = p.DistanceTo(q)
 	)
 
-	if !inkgeom.FloatsEqual(dist, 5.0) {
+	if !nums.FloatsEqual(dist, 5.0) {
 		t.Error("Wrong distance between points")
 	}
 }
 
 func TestVectorLength(t *testing.T) {
 	v := MakeVector(3, 4)
-	if !inkgeom.FloatsEqual(v.Length(), 5.0) {
+	if !nums.FloatsEqual(v.Length(), 5.0) {
 		t.Error("Wrong vector norm")
 	}
 }
@@ -84,14 +84,14 @@ func TestSubtractVectors(t *testing.T) {
 
 func TestVectorsDotProduct(t *testing.T) {
 	p := MakeVector(1, 2).DotTimes(MakeVector(3, 5))
-	if !inkgeom.FloatsEqual(p, 13.0) {
+	if !nums.FloatsEqual(p, 13.0) {
 		t.Error("Dot product yielded wrong result")
 	}
 }
 
 func TestVectorsCrossProduct(t *testing.T) {
 	p := MakeVector(1, 2).CrossTimes(MakeVector(3, 5))
-	if !inkgeom.FloatsEqual(p, -1.0) {
+	if !nums.FloatsEqual(p, -1.0) {
 		t.Error("Cross product yielded wrong result")
 	}
 }

@@ -3,7 +3,7 @@ package g2d
 import (
 	"testing"
 
-	"github.com/angelsolaorbaiceta/inkgeom"
+	"github.com/angelsolaorbaiceta/inkgeom/nums"
 )
 
 func TestMakeSegmentFromCoords(t *testing.T) {
@@ -28,24 +28,24 @@ func TestSegmentLength(t *testing.T) {
 	p, q := MakePoint(1, 2), MakePoint(4, 6)
 	seg := MakeSegment(p, q)
 
-	if !inkgeom.FloatsEqual(seg.Length(), 5.0) {
+	if !nums.FloatsEqual(seg.Length(), 5.0) {
 		t.Error("Wrong segment length")
 	}
 }
 
 func TestSegmentLengthBetweenPositions(t *testing.T) {
 	p, q := MakePoint(1, 2), MakePoint(4, 6)
-	st, et := inkgeom.MakeTParam(0.25), inkgeom.MakeTParam(0.75)
+	st, et := nums.MakeTParam(0.25), nums.MakeTParam(0.75)
 	seg := MakeSegment(p, q)
 
-	if !inkgeom.FloatsEqual(seg.LengthBetween(st, et), 2.5) {
+	if !nums.FloatsEqual(seg.LengthBetween(st, et), 2.5) {
 		t.Error("Wrong segment length")
 	}
 }
 
 func TestPointAtPosition(t *testing.T) {
 	seg := MakeSegment(MakePoint(1, 1), MakePoint(3, 5))
-	pos := inkgeom.MakeTParam(0.5)
+	pos := nums.MakeTParam(0.5)
 	expectedPoint := MakePoint(2, 3)
 
 	if !seg.PointAt(pos).Equals(expectedPoint) {

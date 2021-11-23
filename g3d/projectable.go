@@ -3,7 +3,7 @@ package g3d
 import (
 	"math"
 
-	"github.com/angelsolaorbaiceta/inkgeom"
+	"github.com/angelsolaorbaiceta/inkgeom/nums"
 )
 
 /*
@@ -50,7 +50,7 @@ func (p Projectable) Length() float64 {
 
 // IsVersor returns true if the vector has a length of 1.
 func (p Projectable) IsVersor() bool {
-	return inkgeom.IsCloseToOne(p.Length())
+	return nums.IsCloseToOne(p.Length())
 }
 
 /* <-- Utils --> */
