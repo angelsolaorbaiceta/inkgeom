@@ -66,6 +66,11 @@ func (p *Projectable) Opposite() *Projectable {
 	return MakeVector(-p.x, -p.y, -p.z)
 }
 
+// Scaled creates a new vector with the projections scaled the given factor.
+func (p *Projectable) Scaled(factor float64) *Projectable {
+	return MakeVector(p.x*factor, p.y*factor, p.z*factor)
+}
+
 // ToVersor returns a versor with the same direction as this vector.
 func (p *Projectable) ToVersor() *Projectable {
 	if p.IsVersor() {
@@ -110,11 +115,11 @@ func (multiplicand *Projectable) DotTimes(multiplier *Projectable) float64 {
 }
 
 // CrossTimes computes the cross product of this vector with other.
-func (u *Projectable) CrossTimes(v *Projectable) *Projectable {
+func (multiplicand *Projectable) CrossTimes(multiplier *Projectable) *Projectable {
 	return MakeVector(
-		(u.y*v.z)-(u.z*v.y),
-		(u.z*v.x)-(u.x*v.z),
-		(u.x*v.y)-(u.y*v.x),
+		(multiplicand.y*multiplier.z)-(multiplicand.z*multiplier.y),
+		(multiplicand.z*multiplier.x)-(multiplicand.x*multiplier.z),
+		(multiplicand.x*multiplier.y)-(multiplicand.y*multiplier.x),
 	)
 }
 

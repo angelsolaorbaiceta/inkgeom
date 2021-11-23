@@ -86,6 +86,18 @@ func TestVectorOpposite(t *testing.T) {
 	}
 }
 
+func TestVectorScale(t *testing.T) {
+	var (
+		scale  = 3.0
+		vector = MakeVector(1, 2, 3)
+		want   = MakeVector(3, 6, 9)
+	)
+
+	if got := vector.Scaled(scale); !want.Equals(got) {
+		t.Errorf("Want vector %v, but got %v", want, got)
+	}
+}
+
 func TestVectorOperations(t *testing.T) {
 	var (
 		u = MakeVector(1, 2, 3)
