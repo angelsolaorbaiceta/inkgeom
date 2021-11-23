@@ -12,7 +12,7 @@ func TestCreateProjectable(t *testing.T) {
 		x = 10.0
 		y = 20.0
 		z = 30.0
-		p = Projectable{x, y, z}
+		p = Vector{x, y, z}
 	)
 
 	t.Run("has a X projection", func(t *testing.T) {
