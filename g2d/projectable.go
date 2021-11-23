@@ -8,10 +8,8 @@ import (
 )
 
 /*
-Projectable is an entity with projections both in X and Y axis.
-
-Used to represent both points and vectors, which make you responsible for knowing
-what each instance of the Projectable struct is.
+Projectable is an entity with projections both in the X and Y axis.
+Used to represent both points and vectors in two dimensions.
 */
 type Projectable struct {
 	x, y float64
@@ -50,12 +48,10 @@ func (p Projectable) IsVersor() bool {
 	return inkgeom.FloatsEqual(p.Norm(), 1.0)
 }
 
-// X is the projection on the horizontal axis.
 func (p Projectable) X() float64 {
 	return p.x
 }
 
-// Y is the projection on the vertical axis.
 func (p Projectable) Y() float64 {
 	return p.y
 }
