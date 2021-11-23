@@ -50,7 +50,7 @@ func (p Projectable) Length() float64 {
 
 // IsVersor returns true if the vector has a length of 1.
 func (p Projectable) IsVersor() bool {
-	return inkgeom.FloatsEqual(p.Length(), 1.0)
+	return inkgeom.IsCloseToOne(p.Length())
 }
 
 /* <-- Utils --> */

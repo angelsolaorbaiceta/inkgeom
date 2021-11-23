@@ -20,6 +20,11 @@ func FloatsEqual(a, b float64) bool {
 	return FloatsEqualEps(a, b, defaultEpsilon)
 }
 
+// IsCloseToZero returns true if the given number is closer to 1.0 than the default epsilon.
+func IsCloseToOne(a float64) bool {
+	return FloatsEqual(a, 1.0)
+}
+
 /*
 LinInterpol computes the linear interpolation for a given position given two points on
 the desired line: (startPos, startVal) and (endPos, endVal).

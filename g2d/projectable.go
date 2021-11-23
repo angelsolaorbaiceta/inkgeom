@@ -53,14 +53,15 @@ func (p Projectable) Length() float64 {
 
 // IsVersor returns true if the vector has a length of 1.
 func (p Projectable) IsVersor() bool {
-	return inkgeom.FloatsEqual(p.Length(), 1.0)
+	return inkgeom.IsCloseToOne(p.Length())
 }
 
 /* <-- Methods --> */
 
 // Equals returns true if the projections of this and other projectable are equal.
 func (p Projectable) Equals(other Projectable) bool {
-	return inkgeom.FloatsEqual(p.x, other.x) && inkgeom.FloatsEqual(p.y, other.y)
+	return inkgeom.FloatsEqual(p.x, other.x) &&
+		inkgeom.FloatsEqual(p.y, other.y)
 }
 
 // DistanceTo computes the distance between two points.

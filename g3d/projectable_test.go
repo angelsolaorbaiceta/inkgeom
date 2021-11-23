@@ -3,6 +3,8 @@ package g3d
 import (
 	"math"
 	"testing"
+
+	"github.com/angelsolaorbaiceta/inkgeom"
 )
 
 func TestCreateProjectable(t *testing.T) {
@@ -36,6 +38,27 @@ func TestCreateProjectable(t *testing.T) {
 
 		if got := p.Length(); got != want {
 			t.Errorf("Want length = %f, got %f", want, got)
+		}
+	})
+}
+
+func TestVersor(t *testing.T) {
+	var (
+		x = 10.0
+		y = 20.0
+		z = 30.0
+		v = MakeVersor(x, y, z)
+	)
+
+	t.Run("has unit length", func(t *testing.T) {
+		if !inkgeom.IsCloseToOne(v.Length()) {
+			t.Errorf("Expected %f to be 1.0", v.Length())
+		}
+	})
+
+	t.Run("is versor", func(t *testing.T) {
+		if !v.IsVersor() {
+			t.Error("Expected the vector to be a versor")
 		}
 	})
 }
