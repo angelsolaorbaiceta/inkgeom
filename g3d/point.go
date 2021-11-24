@@ -47,6 +47,15 @@ func (p *Point) Displaced(vector *Vector, times float64) *Point {
 	)
 }
 
+// VectorTo creates a vector goint from this point to another given one.
+func (from *Point) VectorTo(to *Point) *Vector {
+	return MakeVector(
+		to.x-from.x,
+		to.y-from.y,
+		to.z-from.z,
+	)
+}
+
 func (p *Point) Equals(other *Point) bool {
 	return projectablesEqual(p, other)
 }

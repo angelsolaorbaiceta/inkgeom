@@ -54,10 +54,18 @@ func TestDisplacePoint(t *testing.T) {
 	)
 
 	if got := p.Displaced(v, 2); !want.Equals(got) {
-		t.Errorf("Expected point %v, got %v", want, got)
+		t.Errorf("Want point %v, got %v", want, got)
 	}
 }
 
 func TestCreateVectorBetweenPoints(t *testing.T) {
+	var (
+		p    = MakePoint(1, 2, 3)
+		q    = MakePoint(4, 7, 9)
+		want = MakeVector(3, 5, 6)
+	)
 
+	if got := p.VectorTo(q); !want.Equals(got) {
+		t.Errorf("Want point %v, but got %v", want, got)
+	}
 }
