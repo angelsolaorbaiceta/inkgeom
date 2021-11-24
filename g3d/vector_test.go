@@ -7,7 +7,7 @@ import (
 	"github.com/angelsolaorbaiceta/inkgeom/nums"
 )
 
-func TestCreateProjectable(t *testing.T) {
+func TestCreateVector(t *testing.T) {
 	var (
 		x = 10.0
 		y = 20.0
