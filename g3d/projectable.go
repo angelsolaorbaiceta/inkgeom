@@ -9,8 +9,7 @@ type Projectable interface {
 	Z() float64
 }
 
-// ProjectablesEqual checks whether two projectables have equal X, Y and Z projections.
-func ProjectablesEqual(a, b Projectable) bool {
+func projectablesEqual(a, b Projectable) bool {
 	return nums.FloatsEqual(a.X(), b.X()) &&
 		nums.FloatsEqual(a.Y(), b.Y()) &&
 		nums.FloatsEqual(a.Z(), b.Z())

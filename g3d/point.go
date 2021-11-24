@@ -1,9 +1,6 @@
 package g3d
 
-/*
-Point is an entity with projections in the X, Y and Z axes.
-Used to represent both points and vectors in two dimensions.
-*/
+// Point is a position in space, with X, Y and Z coordinates.
 type Point struct {
 	x, y, z float64
 }
@@ -31,5 +28,5 @@ func (p *Point) Z() float64 {
 /* <-- Methods --> */
 
 func (p *Point) Equals(other *Point) bool {
-	return ProjectablesEqual(p, other)
+	return projectablesEqual(p, other)
 }
