@@ -17,8 +17,6 @@ type Vector struct {
 	x, y, z float64
 }
 
-/* <-- Construction --> */
-
 func MakeVector(x, y, z float64) *Vector {
 	return &Vector{x, y, z}
 }
@@ -28,16 +26,17 @@ func MakeVersor(x, y, z float64) *Vector {
 	return &Vector{x / length, y / length, z / length}
 }
 
-/* <-- Properties --> */
-
+// X is the vector's projection in the X axis.
 func (v *Vector) X() float64 {
 	return v.x
 }
 
+// Y is the vector's projection in the Y axis.
 func (v *Vector) Y() float64 {
 	return v.y
 }
 
+// Z is the vector's projection in the Z axis.
 func (v *Vector) Z() float64 {
 	return v.z
 }
@@ -51,8 +50,6 @@ func (v *Vector) Length() float64 {
 func (v *Vector) IsVersor() bool {
 	return nums.IsCloseToOne(v.Length())
 }
-
-/* <-- Methods --> */
 
 // ToVersor returns a versor with the same direction as this vector.
 func (v *Vector) ToVersor() *Vector {
@@ -76,8 +73,6 @@ func (v *Vector) Scaled(factor float64) *Vector {
 func (v *Vector) Equals(other *Vector) bool {
 	return projectablesEqual(v, other)
 }
-
-/* <-- Utils --> */
 
 func computeLength(x, y, z float64) float64 {
 	return math.Sqrt(x*x + y*y + z*z)

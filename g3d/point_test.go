@@ -45,3 +45,19 @@ func TestPointsDistance(t *testing.T) {
 		t.Errorf("Want distance %f, got %f", want, got)
 	}
 }
+
+func TestDisplacePoint(t *testing.T) {
+	var (
+		p    = MakePoint(1, 2, 3)
+		v    = MakeVector(10, 20, 30)
+		want = MakePoint(21, 42, 63)
+	)
+
+	if got := p.Displaced(v, 2); !want.Equals(got) {
+		t.Errorf("Expected point %v, got %v", want, got)
+	}
+}
+
+func TestCreateVectorBetweenPoints(t *testing.T) {
+
+}
