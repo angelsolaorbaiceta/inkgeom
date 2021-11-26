@@ -8,11 +8,18 @@ type Line struct {
 
 // MakeLine creates a line passing throught the given point and with the given direction, which is
 // normalized (scaled to have unitary length).
-func MakeLine(origin *Point, direction *Vector) *Line {
+// Returns an error if the direction vector has zero length.
+func MakeLine(origin *Point, direction *Vector) (*Line, error) {
+	dirVersor, err := direction.ToVersor()
+
+	if err != nil {
+		return nil, err
+	}
+
 	return &Line{
 		origin:    origin,
-		direction: direction.ToVersor(),
-	}
+		direction: dirVersor,
+	}, nil
 }
 
 // The Origin is a base point the line goes through.

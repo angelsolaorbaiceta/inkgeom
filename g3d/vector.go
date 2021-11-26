@@ -1,15 +1,16 @@
 package g3d
 
 import (
+	"errors"
 	"math"
 
 	"github.com/angelsolaorbaiceta/inkgeom/nums"
 )
 
 var (
-	IVersor = MakeVersor(1, 0, 0)
-	JVersor = MakeVersor(0, 1, 0)
-	KVersor = MakeVersor(0, 0, 1)
+	IVersor, _ = MakeVersor(1, 0, 0)
+	JVersor, _ = MakeVersor(0, 1, 0)
+	KVersor, _ = MakeVersor(0, 0, 1)
 )
 
 // A Vector is a direction with length in space.
@@ -21,9 +22,16 @@ func MakeVector(x, y, z float64) *Vector {
 	return &Vector{x, y, z}
 }
 
-func MakeVersor(x, y, z float64) *Vector {
+// MakeVersor creates a versor (a vector of unit length) given the vector components X, Y and Z.
+// Returns an error if all three components are zero, as the zero vector can't be normalized.
+func MakeVersor(x, y, z float64) (*Vector, error) {
 	length := computeLength(x, y, z)
-	return &Vector{x / length, y / length, z / length}
+
+	if nums.IsCloseToZero(length) {
+		errors.New("Can't create a versor if all components are zero")
+	}
+
+	return &Vector{x / length, y / length, z / length}, nil
 }
 
 // X is the vector's projection in the X axis.
@@ -51,10 +59,16 @@ func (v *Vector) IsVersor() bool {
 	return nums.IsCloseToOne(v.Length())
 }
 
+// IsZero returns true if all X, Y and Z componets of this vector are zero.
+func (v *Vector) IsZero() bool {
+	return nums.IsCloseToZero(v.x) && nums.IsCloseToZero(v.y) && nums.IsCloseToZero(v.z)
+}
+
 // ToVersor returns a versor with the same direction as this vector.
-func (v *Vector) ToVersor() *Vector {
+// Returns an error if all three components are zero, as the zero vector can't be normalized.
+func (v *Vector) ToVersor() (*Vector, error) {
 	if v.IsVersor() {
-		return v
+		return v, nil
 	}
 
 	return MakeVersor(v.x, v.y, v.z)

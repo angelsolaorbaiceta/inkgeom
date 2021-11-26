@@ -7,11 +7,15 @@ import (
 
 func TestCreateLine(t *testing.T) {
 	var (
-		origin        = MakePoint(1, 2, 4)
-		direction     = MakeVector(1, 1, 1)
-		wantDirection = MakeVersor(1, 1, 1)
-		line          = MakeLine(origin, direction)
+		origin           = MakePoint(1, 2, 4)
+		direction        = MakeVector(1, 1, 1)
+		wantDirection, _ = MakeVersor(1, 1, 1)
+		line, err        = MakeLine(origin, direction)
 	)
+
+	if err != nil {
+		t.Error("Expected line to be created without error")
+	}
 
 	if got := line.Origin(); !origin.Equals(got) {
 		t.Errorf("Want line origin %v, but got %v", origin, got)
@@ -24,9 +28,9 @@ func TestCreateLine(t *testing.T) {
 
 func TestPointAt(t *testing.T) {
 	var (
-		origin = MakePoint(1, 2, 3)
-		dir    = MakeVersor(1, 1, 1)
-		line   = MakeLine(origin, dir)
+		origin  = MakePoint(1, 2, 3)
+		dir, _  = MakeVersor(1, 1, 1)
+		line, _ = MakeLine(origin, dir)
 	)
 
 	t.Run("At t = 0, the point is the line's origin", func(t *testing.T) {

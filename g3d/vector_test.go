@@ -44,11 +44,17 @@ func TestCreateVector(t *testing.T) {
 
 func TestVersor(t *testing.T) {
 	var (
-		x = 10.0
-		y = 20.0
-		z = 30.0
-		v = MakeVersor(x, y, z)
+		x      = 10.0
+		y      = 20.0
+		z      = 30.0
+		v, err = MakeVersor(x, y, z)
 	)
+
+	t.Run("is created without error", func(t *testing.T) {
+		if err != nil {
+			t.Error("Expected versor creation without error")
+		}
+	})
 
 	t.Run("has unit length", func(t *testing.T) {
 		if !nums.IsCloseToOne(v.Length()) {
@@ -69,8 +75,13 @@ func TestVersor(t *testing.T) {
 			t.Error("Expected the vector to not have unitary length")
 		}
 
-		if !vector.ToVersor().IsVersor() {
+		versor, err := vector.ToVersor()
+
+		if !versor.IsVersor() {
 			t.Error("A versor should have unitary length")
+		}
+		if err != nil {
+			t.Error("Expected versor without error")
 		}
 	})
 }

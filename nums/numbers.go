@@ -20,9 +20,14 @@ func FloatsEqual(a, b float64) bool {
 	return FloatsEqualEps(a, b, defaultEpsilon)
 }
 
-// IsCloseToZero returns true if the given number is closer to 1.0 than the default epsilon.
+// IsCloseToOne returns true if the given number is closer to 1.0 than the default epsilon.
 func IsCloseToOne(a float64) bool {
 	return FloatsEqual(a, 1.0)
+}
+
+// IsCloseToZero returns true if the given number is closer to 1.0 than the default epsilon.
+func IsCloseToZero(a float64) bool {
+	return FloatsEqual(a, 0.0)
 }
 
 /*
