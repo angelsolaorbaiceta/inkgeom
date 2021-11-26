@@ -13,6 +13,8 @@ var (
 	KVersor, _ = MakeVersor(0, 0, 1)
 )
 
+var errZeroVersor = errors.New("can't create a versor if all components are zero")
+
 // A Vector is a direction with length in space.
 type Vector struct {
 	x, y, z float64
@@ -28,7 +30,7 @@ func MakeVersor(x, y, z float64) (*Vector, error) {
 	length := computeLength(x, y, z)
 
 	if nums.IsCloseToZero(length) {
-		errors.New("Can't create a versor if all components are zero")
+		return nil, errZeroVersor
 	}
 
 	return &Vector{x / length, y / length, z / length}, nil

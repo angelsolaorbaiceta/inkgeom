@@ -84,6 +84,28 @@ func TestVersor(t *testing.T) {
 			t.Error("Expected versor without error")
 		}
 	})
+
+	t.Run("Can't be created from three zero components", func(t *testing.T) {
+		v, err := MakeVersor(0, 0, 0)
+
+		if v != nil {
+			t.Errorf("Want nil vector, but got %v", v)
+		}
+		if err == nil {
+			t.Error("Expected error")
+		}
+	})
+
+	t.Run("Can't create a versor from a zero vector", func(t *testing.T) {
+		v, err := MakeVector(0, 0, 0).ToVersor()
+
+		if v != nil {
+			t.Errorf("Want nil vector, but got %v", v)
+		}
+		if err == nil {
+			t.Error("Expected error")
+		}
+	})
 }
 
 func TestVectorOpposite(t *testing.T) {
