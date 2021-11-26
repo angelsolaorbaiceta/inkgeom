@@ -34,7 +34,7 @@ func TestCreatePoint(t *testing.T) {
 	})
 }
 
-func TestPointsDistance(t *testing.T) {
+func TestDistanceBetweenPoints(t *testing.T) {
 	var (
 		p    = MakePoint(1, 2, 3)
 		q    = MakePoint(4, 7, 9)
