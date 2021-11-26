@@ -10,16 +10,16 @@ func TestMakeSegmentFromCoords(t *testing.T) {
 	sx, sy, ex, ey := 1.0, 2.0, 3.0, 4.0
 	seg := MakeSegmentFromCoords(sx, sy, ex, ey)
 
-	if seg.Start.X() != sx {
+	if seg.Start().X() != sx {
 		t.Error("Start X coord not as expected")
 	}
-	if seg.Start.Y() != sy {
+	if seg.Start().Y() != sy {
 		t.Error("Start Y coord not as expected")
 	}
-	if seg.End.X() != ex {
+	if seg.End().X() != ex {
 		t.Error("End X coord not as expected")
 	}
-	if seg.End.Y() != ey {
+	if seg.End().Y() != ey {
 		t.Error("End Y coord not as expected")
 	}
 }

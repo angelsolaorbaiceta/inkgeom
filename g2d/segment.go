@@ -4,12 +4,10 @@ import (
 	"github.com/angelsolaorbaiceta/inkgeom/nums"
 )
 
-// A Segment is a line between two points.
+// A Segment is a straignt line defined between two points.
 type Segment struct {
-	Start, End *Point
+	start, end *Point
 }
-
-/* <-- Construction --> */
 
 // MakeSegment creates a new segment defined between the given start and end points.
 func MakeSegment(start, end *Point) *Segment {
@@ -24,11 +22,17 @@ func MakeSegmentFromCoords(startX, startY, endX, endY float64) *Segment {
 	)
 }
 
-/* <-- Properties --> */
+func (s *Segment) Start() *Point {
+	return s.start
+}
+
+func (s *Segment) End() *Point {
+	return s.end
+}
 
 // Length computes the total length of the segment.
 func (s *Segment) Length() float64 {
-	return s.Start.DistanceTo(s.End)
+	return s.start.DistanceTo(s.end)
 }
 
 /* <-- Methods--> */
@@ -46,8 +50,8 @@ func (s *Segment) PointAt(t nums.TParam) *Point {
 	)
 
 	return MakePoint(
-		nums.LinInterpol(minTVal, s.Start.X(), maxTVal, s.End.X(), t.Value()),
-		nums.LinInterpol(minTVal, s.Start.Y(), maxTVal, s.End.Y(), t.Value()),
+		nums.LinInterpol(minTVal, s.start.x, maxTVal, s.end.x, t.Value()),
+		nums.LinInterpol(minTVal, s.start.y, maxTVal, s.end.y, t.Value()),
 	)
 }
 
@@ -56,7 +60,7 @@ DirectionVersor computes the versor which points in the advancing direction of t
 segment's [start -> end].
 */
 func (s *Segment) DirectionVersor() *Vector {
-	return s.Start.VectorTo(s.End).ToVersor()
+	return s.start.VectorTo(s.end).ToVersor()
 }
 
 // NormalVersor computes the versor perpendicular to the direction versor of the segment.
