@@ -2,7 +2,7 @@ package g2d
 
 // RefFrame represents an orthonormal reference frame in two dimensions.
 type RefFrame struct {
-	iVersor, jVersor Projectable
+	iVersor, jVersor *Vector
 }
 
 /* <-- Construction --> */
@@ -11,15 +11,15 @@ type RefFrame struct {
 MakeRefFrameWithIVersor returns a reference frame with unitary and normal versors from
 a given vector which gives the direction of the i versor.
 */
-func MakeRefFrameWithIVersor(iVersor Projectable) RefFrame {
+func MakeRefFrameWithIVersor(iVersor *Vector) *RefFrame {
 	i := iVersor.ToVersor()
-	return RefFrame{iVersor: i, jVersor: i.Perpendicular()}
+	return &RefFrame{iVersor: i, jVersor: i.Perpendicular()}
 }
 
 /* <-- Methods --> */
 
 // ProjectVector returns the projection of a vector (given in global coordinates) in this reference frame.
-func (r RefFrame) ProjectVector(p Projectable) Projectable {
+func (r *RefFrame) ProjectVector(p *Vector) *Vector {
 	return MakeVector(p.DotTimes(r.iVersor), p.DotTimes(r.jVersor))
 }
 
@@ -27,7 +27,7 @@ func (r RefFrame) ProjectVector(p Projectable) Projectable {
 ProjectProjections returns the projectio of a vector given by its projections in global
 coordinates in this reference frame.
 */
-func (r RefFrame) ProjectProjections(xProj, yProj float64) Projectable {
+func (r *RefFrame) ProjectProjections(xProj, yProj float64) *Vector {
 	return r.ProjectVector(MakeVector(xProj, yProj))
 }
 
@@ -35,7 +35,7 @@ func (r RefFrame) ProjectProjections(xProj, yProj float64) Projectable {
 ProjectVectorToGlobal returns the projection of a local vector (vector projected in this reference frame),
 in the global reference frame.
 */
-func (r RefFrame) ProjectVectorToGlobal(p Projectable) Projectable {
+func (r *RefFrame) ProjectVectorToGlobal(p *Vector) *Vector {
 	return r.ProjectionsToGlobal(p.X(), p.Y())
 }
 
@@ -43,7 +43,7 @@ func (r RefFrame) ProjectVectorToGlobal(p Projectable) Projectable {
 ProjectionsToGlobal returns the projection of a local vector (vector projected in this reference frame),
 in the global reference frame.
 */
-func (r RefFrame) ProjectionsToGlobal(xProj, yProj float64) Projectable {
+func (r *RefFrame) ProjectionsToGlobal(xProj, yProj float64) *Vector {
 	var (
 		x = r.iVersor.Scaled(xProj)
 		y = r.jVersor.Scaled(yProj)
@@ -57,7 +57,7 @@ Cos returns the cosine of the angle between:
 	- this frame's i versor and
 	- global frame i's versor.
 */
-func (r RefFrame) Cos() float64 {
+func (r *RefFrame) Cos() float64 {
 	return r.iVersor.DotTimes(IVersor)
 }
 
@@ -66,6 +66,6 @@ Sin returns the sine of the angle between:
 	- this frame's i versor and
 	- global frame's i versor
 */
-func (r RefFrame) Sin() float64 {
+func (r *RefFrame) Sin() float64 {
 	return r.iVersor.DotTimes(JVersor)
 }
