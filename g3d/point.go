@@ -2,6 +2,10 @@ package g3d
 
 import "math"
 
+var (
+	Origin = MakePoint(0, 0, 0)
+)
+
 // Point is a position in space, defined by its X, Y and Z coordinates.
 type Point struct {
 	x, y, z float64
