@@ -155,6 +155,30 @@ func TestVectorParallelism(t *testing.T) {
 	})
 }
 
+func TestVectorPerpendicularity(t *testing.T) {
+	t.Run("perpendicular vectors", func(t *testing.T) {
+		var (
+			u = MakeVector(1, 0, 0)
+			v = MakeVector(0, 1, 0)
+		)
+
+		if !u.IsPerpendicularTo(v) {
+			t.Errorf("Want %v and %v to be perpendicular", u, v)
+		}
+	})
+
+	t.Run("non perpendicular vectors", func(t *testing.T) {
+		var (
+			u = MakeVector(1, 0, 0)
+			v = MakeVector(2, 1, -5)
+		)
+
+		if u.IsPerpendicularTo(v) {
+			t.Errorf("Want %v and %v to not be perpendicular", u, v)
+		}
+	})
+}
+
 func TestVectorOperations(t *testing.T) {
 	var (
 		u = MakeVector(1, 2, 3)

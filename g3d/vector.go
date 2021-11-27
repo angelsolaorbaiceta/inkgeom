@@ -112,6 +112,11 @@ func (v *Vector) IsParallelTo(other *Vector) bool {
 	return v.CrossTimes(other).IsZero()
 }
 
+// IsPerpendicularTo checks whether this and other vectors have perpendicular directions.
+func (v *Vector) IsPerpendicularTo(other *Vector) bool {
+	return nums.IsCloseToZero(v.DotTimes(other))
+}
+
 // Equals checks whether this and other vector have equal X, Y and Z projections.
 func (v *Vector) Equals(other *Vector) bool {
 	return projectablesEqual(v, other)
