@@ -11,15 +11,21 @@ var (
 	IVersor, _ = MakeVersor(1, 0, 0)
 	JVersor, _ = MakeVersor(0, 1, 0)
 	KVersor, _ = MakeVersor(0, 0, 1)
+	Zero       = MakeVector(0, 0, 0)
 )
 
-var errZeroVersor = errors.New("can't create a versor if all components are zero")
+var (
+	// ErrZeroVersor happens when a versor is created either from all zero projections or by
+	// normalizing a zero vector.
+	ErrZeroVersor = errors.New("can't create a versor if all components are zero")
+)
 
 // A Vector is a direction with length in space.
 type Vector struct {
 	x, y, z float64
 }
 
+// MakeVector creates a new vector given the X, Y and Z projections.
 func MakeVector(x, y, z float64) *Vector {
 	return &Vector{x, y, z}
 }
@@ -30,7 +36,7 @@ func MakeVersor(x, y, z float64) (*Vector, error) {
 	length := computeLength(x, y, z)
 
 	if nums.IsCloseToZero(length) {
-		return nil, errZeroVersor
+		return nil, ErrZeroVersor
 	}
 
 	return &Vector{x / length, y / length, z / length}, nil

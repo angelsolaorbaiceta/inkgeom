@@ -17,13 +17,28 @@ func TestCreateLine(t *testing.T) {
 		t.Error("Expected line to be created without error")
 	}
 
-	if got := line.Origin(); !origin.Equals(got) {
-		t.Errorf("Want line origin %v, but got %v", origin, got)
-	}
+	t.Run("has origin", func(t *testing.T) {
+		if got := line.Origin(); !origin.Equals(got) {
+			t.Errorf("Want line origin %v, but got %v", origin, got)
+		}
+	})
 
-	if got := line.Direction(); !wantDirection.Equals(got) {
-		t.Errorf("Want line direction %v, but got %v", wantDirection, got)
-	}
+	t.Run("has direction", func(t *testing.T) {
+		if got := line.Direction(); !wantDirection.Equals(got) {
+			t.Errorf("Want line direction %v, but got %v", wantDirection, got)
+		}
+	})
+
+	t.Run("can't be created from a zero vector as direction", func(t *testing.T) {
+		line, err := MakeLine(origin, Zero)
+
+		if line != nil {
+			t.Error("Expected line to be nil")
+		}
+		if err != ErrZeroVersor {
+			t.Error("Expected creation to yield error")
+		}
+	})
 }
 
 func TestPointAt(t *testing.T) {

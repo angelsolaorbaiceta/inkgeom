@@ -91,7 +91,7 @@ func TestVersor(t *testing.T) {
 		if v != nil {
 			t.Errorf("Want nil vector, but got %v", v)
 		}
-		if err == nil {
+		if err != ErrZeroVersor {
 			t.Error("Expected error")
 		}
 	})
@@ -102,7 +102,7 @@ func TestVersor(t *testing.T) {
 		if v != nil {
 			t.Errorf("Want nil vector, but got %v", v)
 		}
-		if err == nil {
+		if err != ErrZeroVersor {
 			t.Error("Expected error")
 		}
 	})
