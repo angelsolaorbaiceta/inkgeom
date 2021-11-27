@@ -6,6 +6,8 @@ import (
 )
 
 // LinePlane is the resulting intersection of a line with a plane.
+// When the line and the plane are parallel, there is no intersection, and thus Point will be nil.
+// In the cases where HasIntersection is true, the Point is defined.
 type LinePlane struct {
 	HasIntersection bool
 	Point           *g3d.Point
