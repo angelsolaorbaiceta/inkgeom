@@ -56,9 +56,10 @@ func (p *Plane) NormalVector() *Vector {
 
 // ContainsPoint checks whether the given point is on the plane.
 func (p *Plane) ContainsPoint(pt *Point) bool {
-	return nums.IsCloseToZero(p.evaluatePoint(pt) + p.d)
+	return nums.IsCloseToZero(p.EvaluatePoint(pt))
 }
 
-func (p *Plane) evaluatePoint(pt *Point) float64 {
-	return p.a()*pt.x + p.b()*pt.y + p.c()*pt.z
+// EvaluatePoint returns the result of evaluating a point in the plane's ax + by + cz + d equation.
+func (p *Plane) EvaluatePoint(pt *Point) float64 {
+	return p.a()*pt.x + p.b()*pt.y + p.c()*pt.z + p.d
 }
