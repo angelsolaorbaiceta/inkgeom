@@ -18,9 +18,12 @@ var (
 	// ErrZeroVersor happens when a versor is created either from all zero projections or by
 	// normalizing a zero vector.
 	ErrZeroVersor = errors.New("can't create a versor if all components are zero")
+	// ErrZeroVector results from an operation that requires a vector with a non-zero length.
+	ErrZeroVector = errors.New("can't use a vector with zero length")
 )
 
 // A Vector is a direction with length in space.
+// Vectors have three projections: Z, Y and Z.
 type Vector struct {
 	x, y, z float64
 }
@@ -28,6 +31,18 @@ type Vector struct {
 // MakeVector creates a new vector given the X, Y and Z projections.
 func MakeVector(x, y, z float64) *Vector {
 	return &Vector{x, y, z}
+}
+
+// MakeNonZeroVector creates a new vector given the X, Y and Z projections, or returns an ErrZeroVector
+// error if the three of them are zero, as this would result in a vector with zero length.
+func MakeNonZeroVector(x, y, z float64) (*Vector, error) {
+	length := computeLength(x, y, z)
+
+	if nums.IsCloseToZero(length) {
+		return nil, ErrZeroVector
+	}
+
+	return MakeVector(x, y, z), nil
 }
 
 // MakeVersor creates a versor (a vector of unit length) given the vector components X, Y and Z.
