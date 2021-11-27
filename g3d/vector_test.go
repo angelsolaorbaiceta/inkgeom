@@ -131,6 +131,30 @@ func TestVectorScale(t *testing.T) {
 	}
 }
 
+func TestVectorParallelism(t *testing.T) {
+	t.Run("parallel vectors", func(t *testing.T) {
+		var (
+			u = MakeVector(1, 2, 3)
+			v = MakeVector(2, 4, 6)
+		)
+
+		if !u.IsParallelTo(v) {
+			t.Errorf("Want %v and %v to be parallel", u, v)
+		}
+	})
+
+	t.Run("non parallel vectors", func(t *testing.T) {
+		var (
+			u = MakeVector(1, 2, 3)
+			v = MakeVector(5, 1, -9)
+		)
+
+		if u.IsParallelTo(v) {
+			t.Errorf("Want %v and %v to not be parallel", u, v)
+		}
+	})
+}
+
 func TestVectorOperations(t *testing.T) {
 	var (
 		u = MakeVector(1, 2, 3)

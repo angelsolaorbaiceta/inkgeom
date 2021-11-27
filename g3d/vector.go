@@ -107,6 +107,12 @@ func (v *Vector) Scaled(factor float64) *Vector {
 	return MakeVector(v.x*factor, v.y*factor, v.z*factor)
 }
 
+// IsParalleTo checks whether this and other vectors have the same direction (are parallel).
+func (v *Vector) IsParallelTo(other *Vector) bool {
+	return v.CrossTimes(other).IsZero()
+}
+
+// Equals checks whether this and other vector have equal X, Y and Z projections.
 func (v *Vector) Equals(other *Vector) bool {
 	return projectablesEqual(v, other)
 }
