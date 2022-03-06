@@ -4,10 +4,10 @@ import "testing"
 
 func TestCreateRect(t *testing.T) {
 	var (
-		origin = MakePoint(2, 3)
-		width  = 20.0
-		height = 30.0
-		rect   = MakeRect(*origin, width, height)
+		origin  = MakePoint(2, 3)
+		width   = 20.0
+		height  = 30.0
+		rect, _ = MakeRect(*origin, width, height)
 	)
 
 	if got := rect.Origin(); !got.Equals(origin) {
@@ -32,11 +32,38 @@ func TestCreateRect(t *testing.T) {
 	if got := rect.Top(); got != origin.y+height {
 		t.Errorf("Want top %f, got %f", origin.y+height, got)
 	}
+
+	t.Run("Returns an error if the width is less than zero", func(t *testing.T) {
+		if rect, err := MakeRect(*origin, -width, height); err == nil || rect != nil {
+			t.Error("Want error, got nil")
+		}
+	})
+
+	t.Run("Returns an error if the height is less than zero", func(t *testing.T) {
+		if rect, err := MakeRect(*origin, width, -height); err == nil || rect != nil {
+			t.Error("Want error, got nil")
+		}
+	})
+}
+
+func TestMakeRectContainingPoints(t *testing.T) {
+	var (
+		points = []*Point{
+			MakePoint(0, 5),
+			MakePoint(10, 0),
+			MakePoint(5, 7),
+		}
+		wantRect, _ = MakeRect(*MakePoint(0, 0), 10, 7)
+	)
+
+	if got, _ := MakeRectContaining(points); !got.Equals(wantRect) {
+		t.Errorf("Want %v, got %v", wantRect, got)
+	}
 }
 
 func TestRectContainsPoint(t *testing.T) {
 	var (
-		rect          = MakeRect(*MakePoint(10, 20), 100, 200)
+		rect, _       = MakeRect(*MakePoint(10, 20), 100, 200)
 		pointInside   = MakePoint(50, 70)
 		pointsOutside = []*Point{
 			MakePoint(5, 70),
