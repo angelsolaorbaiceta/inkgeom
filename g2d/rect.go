@@ -115,6 +115,11 @@ func (r *Rect) ContainsPoint(point *Point) bool {
 		point.y < r.Top()
 }
 
+// WithScaledSize returns a new rectangle resulting from scaling the width and height.
+func (r *Rect) WithScaledSize(scale float64) (*Rect, error) {
+	return MakeRect(r.origin, r.width*scale, r.height*scale)
+}
+
 // Equals checks if this and other rectangle are equal.
 func (r *Rect) Equals(other *Rect) bool {
 	return r.origin.Equals(&other.origin) &&

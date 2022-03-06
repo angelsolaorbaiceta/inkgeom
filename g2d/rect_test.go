@@ -83,3 +83,18 @@ func TestRectContainsPoint(t *testing.T) {
 		}
 	}
 }
+
+func TestScaleRect(t *testing.T) {
+	var (
+		origin      = MakePoint(2, 3)
+		width       = 20.0
+		height      = 30.0
+		scale       = 5.0
+		rect, _     = MakeRect(*origin, width, height)
+		wantRect, _ = MakeRect(*origin, width*scale, height*scale)
+	)
+
+	if got, _ := rect.WithScaledSize(scale); !got.Equals(wantRect) {
+		t.Errorf("Want %v, got %v", wantRect, got)
+	}
+}
