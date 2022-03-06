@@ -7,6 +7,7 @@ import (
 	"github.com/angelsolaorbaiceta/inkgeom/nums"
 )
 
+// A Point is a position in the two-dimensional space, defined by two coordinates: X and Y.
 type Point struct {
 	x, y float64
 }
@@ -44,10 +45,8 @@ func (p *Point) Equals(other *Point) bool {
 		nums.FloatsEqual(p.y, other.y)
 }
 
-/*
-Compare returns -1 if this node goes before the other, 0 if they are equal and 1 if
-this node goes after the other.
-*/
+// Compare returns -1 if this node goes before the other, 0 if they are equal and 1 if
+// this node goes after the other.
 func (p *Point) Compare(other *Point) int {
 	if p.Equals(other) {
 		return 0
