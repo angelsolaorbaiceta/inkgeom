@@ -115,9 +115,18 @@ func (r *Rect) ContainsPoint(point *Point) bool {
 		point.y < r.Top()
 }
 
-// WithScaledSize returns a new rectangle resulting from scaling the width and height.
+// WithScaledSize creates a new rectangle resulting from scaling the width and height of this one.
 func (r *Rect) WithScaledSize(scale float64) (*Rect, error) {
 	return MakeRect(r.origin, r.width*scale, r.height*scale)
+}
+
+// WithMargins creates a new rectangle resulting of adding margins to this one.
+func (r *Rect) WithMargins(lateral, vertical float64) (*Rect, error) {
+	return MakeRect(
+		*MakePoint(r.origin.x-lateral, r.origin.y-vertical),
+		2*lateral+r.width,
+		2*vertical+r.height,
+	)
 }
 
 // Equals checks if this and other rectangle are equal.

@@ -98,3 +98,43 @@ func TestScaleRect(t *testing.T) {
 		t.Errorf("Want %v, got %v", wantRect, got)
 	}
 }
+
+func TestRectWithMargin(t *testing.T) {
+	rect, _ := MakeRect(*MakePoint(0, 0), 100, 200)
+
+	t.Run("compute a larger rect", func(t *testing.T) {
+		var (
+			lateralMargin  = 10.0
+			verticalMargin = 20.0
+			wantRect, _    = MakeRect(*MakePoint(-10, -20), 120, 240)
+		)
+
+		if got, _ := rect.WithMargins(lateralMargin, verticalMargin); !got.Equals(wantRect) {
+			t.Errorf("Want %v, got %v", wantRect, got)
+		}
+	})
+
+	t.Run("compute a smaller rect", func(t *testing.T) {
+		var (
+			lateralMargin  = -10.0
+			verticalMargin = -20.0
+			wantRect, _    = MakeRect(*MakePoint(10, 20), 80, 160)
+		)
+
+		if got, _ := rect.WithMargins(lateralMargin, verticalMargin); !got.Equals(wantRect) {
+			t.Errorf("Want %v, got %v", wantRect, got)
+		}
+	})
+
+	t.Run("can't create a rect with negative width", func(t *testing.T) {
+		if got, err := rect.WithMargins(-51, 0); got != nil || err == nil {
+			t.Error("Want error")
+		}
+	})
+
+	t.Run("can't create a rect with negative height", func(t *testing.T) {
+		if got, err := rect.WithMargins(0, -101); got != nil || err == nil {
+			t.Error("Want error")
+		}
+	})
+}
