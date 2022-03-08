@@ -11,7 +11,7 @@ import (
 // A Rect is a two dimensional rectangle whose edges are horizontal and vertical.
 // A Rect is defined by an origin point and two numbers: the width and height.
 type Rect struct {
-	origin Point
+	origin *Point
 	width  float64
 	height float64
 }
@@ -19,7 +19,7 @@ type Rect struct {
 // MakeRect creates a new rectangle given an origin point, the width and height.
 //
 // A non-nil error is returned if either the width or height are smaller than zero.
-func MakeRect(origin Point, width, height float64) (*Rect, error) {
+func MakeRect(origin *Point, width, height float64) (*Rect, error) {
 	if width < 0.0 {
 		return nil, errors.New("the width must be greater or equal to zero")
 	}
@@ -64,7 +64,7 @@ func MakeRectContaining(points []*Point) (*Rect, error) {
 	}
 
 	return MakeRect(
-		*MakePoint(minX, minY),
+		MakePoint(minX, minY),
 		maxX-minX,
 		maxY-minY,
 	)
@@ -72,7 +72,7 @@ func MakeRectContaining(points []*Point) (*Rect, error) {
 
 // The Origin of the rectangle
 func (r *Rect) Origin() *Point {
-	return &r.origin
+	return r.origin
 }
 
 // The Width of the rectangle: the horizontal dimension.
@@ -123,7 +123,7 @@ func (r *Rect) WithScaledSize(scale float64) (*Rect, error) {
 // WithMargins creates a new rectangle resulting of adding margins to this one.
 func (r *Rect) WithMargins(lateral, vertical float64) (*Rect, error) {
 	return MakeRect(
-		*MakePoint(r.origin.x-lateral, r.origin.y-vertical),
+		MakePoint(r.origin.x-lateral, r.origin.y-vertical),
 		2*lateral+r.width,
 		2*vertical+r.height,
 	)
@@ -131,7 +131,7 @@ func (r *Rect) WithMargins(lateral, vertical float64) (*Rect, error) {
 
 // Equals checks if this and other rectangle are equal.
 func (r *Rect) Equals(other *Rect) bool {
-	return r.origin.Equals(&other.origin) &&
+	return r.origin.Equals(other.origin) &&
 		nums.FloatsEqual(r.width, other.width) &&
 		nums.FloatsEqual(r.height, other.height)
 }

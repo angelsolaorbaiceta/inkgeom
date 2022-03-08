@@ -7,7 +7,7 @@ func TestCreateRect(t *testing.T) {
 		origin  = MakePoint(2, 3)
 		width   = 20.0
 		height  = 30.0
-		rect, _ = MakeRect(*origin, width, height)
+		rect, _ = MakeRect(origin, width, height)
 	)
 
 	if got := rect.Origin(); !got.Equals(origin) {
@@ -34,13 +34,13 @@ func TestCreateRect(t *testing.T) {
 	}
 
 	t.Run("Returns an error if the width is less than zero", func(t *testing.T) {
-		if rect, err := MakeRect(*origin, -width, height); err == nil || rect != nil {
+		if rect, err := MakeRect(origin, -width, height); err == nil || rect != nil {
 			t.Error("Want error, got nil")
 		}
 	})
 
 	t.Run("Returns an error if the height is less than zero", func(t *testing.T) {
-		if rect, err := MakeRect(*origin, width, -height); err == nil || rect != nil {
+		if rect, err := MakeRect(origin, width, -height); err == nil || rect != nil {
 			t.Error("Want error, got nil")
 		}
 	})
@@ -53,7 +53,7 @@ func TestMakeRectContainingPoints(t *testing.T) {
 			MakePoint(10, 0),
 			MakePoint(5, 7),
 		}
-		wantRect, _ = MakeRect(*MakePoint(0, 0), 10, 7)
+		wantRect, _ = MakeRect(MakePoint(0, 0), 10, 7)
 	)
 
 	if got, _ := MakeRectContaining(points); !got.Equals(wantRect) {
@@ -63,7 +63,7 @@ func TestMakeRectContainingPoints(t *testing.T) {
 
 func TestRectContainsPoint(t *testing.T) {
 	var (
-		rect, _       = MakeRect(*MakePoint(10, 20), 100, 200)
+		rect, _       = MakeRect(MakePoint(10, 20), 100, 200)
 		pointInside   = MakePoint(50, 70)
 		pointsOutside = []*Point{
 			MakePoint(5, 70),
@@ -90,8 +90,8 @@ func TestScaleRect(t *testing.T) {
 		width       = 20.0
 		height      = 30.0
 		scale       = 5.0
-		rect, _     = MakeRect(*origin, width, height)
-		wantRect, _ = MakeRect(*origin, width*scale, height*scale)
+		rect, _     = MakeRect(origin, width, height)
+		wantRect, _ = MakeRect(origin, width*scale, height*scale)
 	)
 
 	if got, _ := rect.WithScaledSize(scale); !got.Equals(wantRect) {
@@ -100,13 +100,13 @@ func TestScaleRect(t *testing.T) {
 }
 
 func TestRectWithMargin(t *testing.T) {
-	rect, _ := MakeRect(*MakePoint(0, 0), 100, 200)
+	rect, _ := MakeRect(MakePoint(0, 0), 100, 200)
 
 	t.Run("compute a larger rect", func(t *testing.T) {
 		var (
 			lateralMargin  = 10.0
 			verticalMargin = 20.0
-			wantRect, _    = MakeRect(*MakePoint(-10, -20), 120, 240)
+			wantRect, _    = MakeRect(MakePoint(-10, -20), 120, 240)
 		)
 
 		if got, _ := rect.WithMargins(lateralMargin, verticalMargin); !got.Equals(wantRect) {
@@ -118,7 +118,7 @@ func TestRectWithMargin(t *testing.T) {
 		var (
 			lateralMargin  = -10.0
 			verticalMargin = -20.0
-			wantRect, _    = MakeRect(*MakePoint(10, 20), 80, 160)
+			wantRect, _    = MakeRect(MakePoint(10, 20), 80, 160)
 		)
 
 		if got, _ := rect.WithMargins(lateralMargin, verticalMargin); !got.Equals(wantRect) {
