@@ -1,6 +1,6 @@
 package g3d
 
-// A Line is an infinite set of aligned points in the plane.
+// A Line is an infinite set of aligned points in space.
 type Line struct {
 	origin    *Point
 	direction *Vector
