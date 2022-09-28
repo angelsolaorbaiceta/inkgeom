@@ -6,12 +6,19 @@ import (
 	"github.com/angelsolaorbaiceta/inkgeom/g3d"
 )
 
-// Linear is a linear transformation applied to a vector, such that, given the vectors
-// U and V, the linear transformation L:
+var (
+	IdentityLinear = MakeLinear(1, 0, 0, 0, 1, 0, 0, 0, 1)
+)
+
+// A Linear transformation that transforms vectors.
+// Given the vectors U and V, the linear transformation L:
 //
 //	L(cU + dV) = cL(U) + dL(V)
 //
 // where c and d are scalars.
+//
+// The transformation of a linear combination is a linear combination of the
+// transformations.
 //
 // A linear transformation is represented by a matrix:
 //
@@ -25,9 +32,7 @@ import (
 //
 // Alternatively, a generic linear transformation can be created using the MakeLinear.
 type Linear struct {
-	a, d, g float64
-	b, e, h float64
-	c, f, i float64
+	m *Matrix3x3
 }
 
 // MakeLinear creates a new linear transformation from the given matrix values.
@@ -38,7 +43,7 @@ type Linear struct {
 //	| b  e  h |
 //	⌊ c  f  i ⌋
 func MakeLinear(a, d, g, b, e, h, c, f, i float64) *Linear {
-	return &Linear{a, d, g, b, e, h, c, f, i}
+	return &Linear{MakeMatrix(a, d, g, b, e, h, c, f, i)}
 }
 
 // MakeScaling creates a scaling linear transformation, where a vector is scaled by the
@@ -66,7 +71,7 @@ func MakeUniformScaling(s float64) *Linear {
 }
 
 // MakeRotation creates a rotation linear transformation, where a vector is rotated by the
-// given angle (in radians) around the given axis.
+// given angle (in radians) around the origin in the direction of the given axis.
 func MakeRotation(radians float64, axis *g3d.Vector) *Linear {
 	var (
 		x           = axis.X()
@@ -86,15 +91,5 @@ func MakeRotation(radians float64, axis *g3d.Vector) *Linear {
 
 // Apply applies the linear transformation to the given vector.
 func (l *Linear) Apply(vec *g3d.Vector) *g3d.Vector {
-	var (
-		x = vec.X()
-		y = vec.Y()
-		z = vec.Z()
-	)
-
-	return g3d.MakeVector(
-		l.a*x+l.d*y+l.g*z,
-		l.b*x+l.e*y+l.h*z,
-		l.c*x+l.f*y+l.i*z,
-	)
+	return l.m.TimesVector(vec)
 }
