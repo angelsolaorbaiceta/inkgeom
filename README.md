@@ -4,7 +4,7 @@ Module for 2D and 3D geometry.
 
 ## 2D Geometry
 
-The basis of two dimensional geometry are points and vectors.
+The basis of the 2D geometry library are points and vectors.
 To create a point use the `MakePoint` function:
 
 ```go
@@ -33,3 +33,21 @@ var (
   vector = g2d.MakeVector(1, 2) // { 1, 2 }
   versor = g2d.MakeVersor(1, 2) // { 1 / sqrt(5), 2 / sqrt(5) }
 )
+```
+
+## 3D Geometry
+
+The 3D library also includes points and vectors.
+The `g3d.Point` and `g3d.Vector` primitives are immutable: once created, their coordinates can't be changed.
+Geometric operations result in new instances of the point or vector.
+
+```go
+// create a point
+point := g3d.MakePoint(1, 2, 3)
+
+// create a vector
+vector := g3d.MakeVector(1, 2, 3)
+
+// create a versor
+versor := g3d.MakeVersor(1, 2, 3)
+```
