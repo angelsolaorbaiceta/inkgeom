@@ -20,7 +20,7 @@ import "github.com/angelsolaorbaiceta/inkgeom/g3d"
 // Use the MakeRotation, MakeTranslation and MakeScaling functions to create
 // these transformations.
 //
-// Alternatively, a generic linear transformation can be created using the `MakeLinear`
+// Alternatively, a generic linear transformation can be created using the MakeLinear.
 type Linear struct {
 	a, d, g float64
 	b, e, h float64
