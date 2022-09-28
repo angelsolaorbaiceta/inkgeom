@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	IdentityLinear = MakeLinear(1, 0, 0, 0, 1, 0, 0, 0, 1)
+	IdentityLinear = &Linear{IdentityMatrix}
 )
 
 // A Linear transformation that transforms vectors.
@@ -32,7 +32,7 @@ var (
 //
 // Alternatively, a generic linear transformation can be created using the MakeLinear.
 type Linear struct {
-	m *Matrix3x3
+	values *Matrix3x3
 }
 
 // MakeLinear creates a new linear transformation from the given matrix values.
@@ -90,6 +90,6 @@ func MakeRotation(radians float64, axis *g3d.Vector) *Linear {
 }
 
 // Apply applies the linear transformation to the given vector.
-func (l *Linear) Apply(vec *g3d.Vector) *g3d.Vector {
-	return l.m.TimesVector(vec)
+func (transf *Linear) Apply(vec *g3d.Vector) *g3d.Vector {
+	return transf.values.TimesProj(vec)
 }

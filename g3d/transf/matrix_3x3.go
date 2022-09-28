@@ -2,6 +2,10 @@ package transf
 
 import "github.com/angelsolaorbaiceta/inkgeom/g3d"
 
+var (
+	IdentityMatrix = MakeMatrix(1, 0, 0, 0, 1, 0, 0, 0, 1)
+)
+
 type Matrix3x3 struct {
 	a, d, g float64
 	b, e, h float64
@@ -12,11 +16,11 @@ func MakeMatrix(a, d, g, b, e, h, c, f, i float64) *Matrix3x3 {
 	return &Matrix3x3{a, d, g, b, e, h, c, f, i}
 }
 
-func (m *Matrix3x3) TimesVector(vector *g3d.Vector) *g3d.Vector {
+func (m *Matrix3x3) TimesProj(proj g3d.Projectable) *g3d.Vector {
 	var (
-		x = vector.X()
-		y = vector.Y()
-		z = vector.Z()
+		x = proj.X()
+		y = proj.Y()
+		z = proj.Z()
 	)
 
 	return g3d.MakeVector(
