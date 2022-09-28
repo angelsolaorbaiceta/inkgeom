@@ -5,44 +5,33 @@ type RefFrame struct {
 	iVersor, jVersor *Vector
 }
 
-/* <-- Construction --> */
-
-/*
-MakeRefFrameWithIVersor returns a reference frame with unitary and normal versors from
-a given vector which gives the direction of the i versor.
-*/
+// MakeRefFrameWithIVersor returns a reference frame with unitary and normal versors from
+// a given vector which gives the direction of the i versor.
 func MakeRefFrameWithIVersor(iVersor *Vector) *RefFrame {
 	i := iVersor.ToVersor()
 	return &RefFrame{iVersor: i, jVersor: i.Perpendicular()}
 }
 
-/* <-- Methods --> */
-
-// ProjectVector returns the projection of a vector (given in global coordinates) in this reference frame.
+// ProjectVector returns the projection of a vector (given in global coordinates) in this
+// reference frame.
 func (r *RefFrame) ProjectVector(p *Vector) *Vector {
 	return MakeVector(p.DotTimes(r.iVersor), p.DotTimes(r.jVersor))
 }
 
-/*
-ProjectProjections returns the projectio of a vector given by its projections in global
-coordinates in this reference frame.
-*/
+// ProjectProjections returns the projectio of a vector given by its projections in global
+// coordinates in this reference frame.
 func (r *RefFrame) ProjectProjections(xProj, yProj float64) *Vector {
 	return r.ProjectVector(MakeVector(xProj, yProj))
 }
 
-/*
-ProjectVectorToGlobal returns the projection of a local vector (vector projected in this reference frame),
-in the global reference frame.
-*/
+// ProjectVectorToGlobal returns the projection of a local vector (vector projected in this
+// reference frame), in the global reference frame.
 func (r *RefFrame) ProjectVectorToGlobal(p *Vector) *Vector {
 	return r.ProjectionsToGlobal(p.X(), p.Y())
 }
 
-/*
-ProjectionsToGlobal returns the projection of a local vector (vector projected in this reference frame),
-in the global reference frame.
-*/
+// ProjectionsToGlobal returns the projection of a local vector (vector projected in this
+// reference frame), in the global reference frame.
 func (r *RefFrame) ProjectionsToGlobal(xProj, yProj float64) *Vector {
 	var (
 		x = r.iVersor.Scaled(xProj)
@@ -52,20 +41,14 @@ func (r *RefFrame) ProjectionsToGlobal(xProj, yProj float64) *Vector {
 	return x.Plus(y)
 }
 
-/*
-Cos returns the cosine of the angle between:
-	- this frame's i versor and
-	- global frame i's versor.
-*/
+// Cos returns the cosine of the angle between this frame's i versor and te global
+// frame i's versor.
 func (r *RefFrame) Cos() float64 {
 	return r.iVersor.DotTimes(IVersor)
 }
 
-/*
-Sin returns the sine of the angle between:
-	- this frame's i versor and
-	- global frame's i versor
-*/
+// Sin returns the sine of the angle between this frame's i versor and the global
+// frame's i versor
 func (r *RefFrame) Sin() float64 {
 	return r.iVersor.DotTimes(JVersor)
 }
