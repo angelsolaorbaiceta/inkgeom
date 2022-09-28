@@ -12,10 +12,7 @@ var (
 	JVersor = MakeVersor(0, 1)
 )
 
-/*
-Vector is an entity with projections both in the X and Y axis.
-Used to represent both points and vectors in two dimensions.
-*/
+// Vector is a direction in the plane represented by two projections: in the X and Y axes.
 type Vector struct {
 	x, y float64
 }

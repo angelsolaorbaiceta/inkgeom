@@ -2,16 +2,34 @@
 
 Module for 2D and 3D geometry.
 
-## Publish New Version
+## 2D Geometry
 
-To publish a new version of this module, first tag it respecting [semantic versioning](https://semver.org/):
+The basis of two dimensional geometry are points and vectors.
+To create a point use the `MakePoint` function:
 
-```bash
-git tag vM.m.p
+```go
+var (
+  pA = g2d.MakePoint(4.0, 5.0)
+  pB = g2d.MakePoint(12.0, 45.0)
+)
 ```
 
-Then push the tag:
+To compute the distance between two points:
 
-```bash
-git push origin vM.m.p
+```go
+distance := pA.distanceTo(pB)
 ```
+
+To create a vector between two points (`pA -> pB`):
+
+```go
+vec := pA.VectorTo(pB)
+```
+
+Both vectors and versos can be created using the `MakeVector` and `MakeVersor` functions:
+
+```go
+var (
+  vector = g2d.MakeVector(1, 2) // { 1, 2 }
+  versor = g2d.MakeVersor(1, 2) // { 1 / sqrt(5), 2 / sqrt(5) }
+)

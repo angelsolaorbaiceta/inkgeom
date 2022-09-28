@@ -17,10 +17,12 @@ func MakePoint(x, y float64) *Point {
 	return &Point{x, y}
 }
 
+// The X coordinate of the point.
 func (p *Point) X() float64 {
 	return p.x
 }
 
+// The Y coordinate of the point.
 func (p *Point) Y() float64 {
 	return p.y
 }
@@ -35,6 +37,7 @@ func (p *Point) DistanceTo(other *Point) float64 {
 	return math.Sqrt(dX*dX + dY*dY)
 }
 
+// VectorTo computes the vector from this point to the other.
 func (from *Point) VectorTo(to *Point) *Vector {
 	return MakeVector(to.x-from.x, to.y-from.y)
 }
