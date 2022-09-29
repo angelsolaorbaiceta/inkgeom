@@ -90,6 +90,6 @@ func MakeRotation(radians float64, axis *g3d.Vector) *Linear {
 }
 
 // Apply applies the linear transformation to the given vector.
-func (transf *Linear) Apply(vec *g3d.Vector) *g3d.Vector {
+func (transf *Linear) Apply(vec g3d.Projectable) *g3d.Vector {
 	return transf.values.TimesProj(vec)
 }

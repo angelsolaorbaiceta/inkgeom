@@ -19,6 +19,7 @@ func MakeRotationAround(radians float64, axis *g3d.Vector, center *g3d.Point) *A
 	return &Affine{rotation, translation}
 }
 
-func (transf *Affine) Apply(vec *g3d.Vector) *g3d.Vector {
-	return transf.linear.Apply(vec).Plus(transf.translation)
+// Apply applies the affine transformation to the given point or vector.
+func (transf *Affine) Apply(proj g3d.Projectable) *g3d.Vector {
+	return transf.linear.Apply(proj).Plus(transf.translation)
 }
