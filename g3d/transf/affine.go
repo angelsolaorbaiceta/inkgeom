@@ -8,12 +8,12 @@ type Affine struct {
 	translation *g3d.Vector
 }
 
-// MakeRotationAround creates a rotation around the given center point, in the direciton
-// of the axis by the given angle.
+// MakeRotationAround creates a rotation affine transformation around the given center
+// point, in the direciton of the axis by the given angle.
 func MakeRotationAround(radians float64, axis *g3d.Vector, center *g3d.Point) *Affine {
 	var (
 		rotation    = MakeRotation(radians, axis)
-		translation = rotation.values.Minus(IdentityMatrix).TimesProj(center)
+		translation = IdentityMatrix.Minus(rotation.values).TimesProj(center)
 	)
 
 	return &Affine{rotation, translation}
