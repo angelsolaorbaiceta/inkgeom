@@ -2,10 +2,19 @@ package transf
 
 import "github.com/angelsolaorbaiceta/inkgeom/g3d"
 
+var (
+	AffineIdentity = &Affine{LinearIdentity, g3d.Zero}
+)
+
 // An Affine transformation is a linear transformation plus a translation.
 type Affine struct {
 	linear      *Linear
 	translation *g3d.Vector
+}
+
+// MakeTranslation creates a translation affine transformation.
+func MakeTranslation(x, y, z float64) *Affine {
+	return &Affine{LinearIdentity, g3d.MakeVector(x, y, z)}
 }
 
 // MakeRotationAround creates a rotation affine transformation around the given center

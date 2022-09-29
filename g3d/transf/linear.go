@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	IdentityLinear = &Linear{IdentityMatrix}
+	LinearIdentity = &Linear{IdentityMatrix}
 )
 
 // A Linear transformation that transforms vectors.

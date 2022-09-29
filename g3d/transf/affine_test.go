@@ -12,6 +12,19 @@ import (
 func TestAffineTransformation(t *testing.T) {
 	assert := assert.New(t)
 
+	t.Run("Translation transformation", func(t *testing.T) {
+		var (
+			x, y, z     = 2.0, 3.0, 4.0
+			translation = MakeTranslation(x, y, z)
+			original    = g3d.MakeVector(1, 2, 3)
+			want        = g3d.MakeVector(3, 5, 7)
+		)
+
+		got := translation.Apply(original)
+
+		assert.True(got.Equals(want))
+	})
+
 	t.Run("Rotation in the YZ plane", func(t *testing.T) {
 		var (
 			angle    = math.Pi / 2
