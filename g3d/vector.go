@@ -107,6 +107,21 @@ func (v *Vector) Scaled(factor float64) *Vector {
 	return MakeVector(v.x*factor, v.y*factor, v.z*factor)
 }
 
+// Squared returns a matrix result of multiplying this vector by its transpose.
+func (v *Vector) Squared() *Matrix3x3 {
+	var (
+		x = v.x
+		y = v.y
+		z = v.z
+	)
+
+	return Make3x3Matrix(
+		x*x, x*y, x*z,
+		y*x, y*y, y*z,
+		z*x, z*y, z*z,
+	)
+}
+
 // IsParalleTo checks whether this and other vectors have the same direction (are parallel).
 func (v *Vector) IsParallelTo(other *Vector) bool {
 	return v.CrossTimes(other).IsZero()

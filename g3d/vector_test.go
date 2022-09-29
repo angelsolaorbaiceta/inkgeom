@@ -177,3 +177,12 @@ func TestVectorOperations(t *testing.T) {
 		assert.True(want.Opposite().Equals(v.CrossTimes(u)))
 	})
 }
+
+func TestVectorSquared(t *testing.T) {
+	var (
+		v    = MakeVector(3, 5, 7)
+		want = Make3x3Matrix(9, 15, 21, 15, 25, 35, 21, 35, 49)
+	)
+
+	assert.True(t, want.Equals(v.Squared()))
+}
