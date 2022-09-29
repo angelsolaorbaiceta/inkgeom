@@ -5,9 +5,12 @@ import (
 	"testing"
 
 	"github.com/angelsolaorbaiceta/inkgeom/nums"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCreateVector(t *testing.T) {
+	assert := assert.New(t)
+
 	var (
 		x = 10.0
 		y = 20.0
@@ -16,33 +19,26 @@ func TestCreateVector(t *testing.T) {
 	)
 
 	t.Run("has a X projection", func(t *testing.T) {
-		if got := p.X(); got != x {
-			t.Errorf("Want X = %f, got %f", x, got)
-		}
+		assert.Equal(x, p.X())
 	})
 
 	t.Run("has a Y projection", func(t *testing.T) {
-		if got := p.Y(); got != y {
-			t.Errorf("Want Y = %f, got %f", y, got)
-		}
+		assert.Equal(y, p.Y())
 	})
 
 	t.Run("has a Z projection", func(t *testing.T) {
-		if got := p.Z(); got != z {
-			t.Errorf("Want Z = %f, got %f", z, got)
-		}
+		assert.Equal(z, p.Z())
 	})
 
 	t.Run("has a length", func(t *testing.T) {
 		want := math.Sqrt(x*x + y*y + z*z)
-
-		if got := p.Length(); got != want {
-			t.Errorf("Want length = %f, got %f", want, got)
-		}
+		assert.Equal(want, p.Length())
 	})
 }
 
 func TestVersor(t *testing.T) {
+	assert := assert.New(t)
+
 	var (
 		x      = 10.0
 		y      = 20.0
@@ -51,60 +47,40 @@ func TestVersor(t *testing.T) {
 	)
 
 	t.Run("is created without error", func(t *testing.T) {
-		if err != nil {
-			t.Error("Expected versor creation without error")
-		}
+		assert.Nil(err)
 	})
 
 	t.Run("has unit length", func(t *testing.T) {
-		if !nums.IsCloseToOne(v.Length()) {
-			t.Errorf("Expected %f to be 1.0", v.Length())
-		}
+		assert.True(nums.IsCloseToOne(v.Length()))
 	})
 
 	t.Run("is versor", func(t *testing.T) {
-		if !v.IsVersor() {
-			t.Error("Expected the vector to be a versor")
-		}
+		assert.True(v.IsVersor())
 	})
 
 	t.Run("As versor", func(t *testing.T) {
 		vector := MakeVector(x, y, z)
 
-		if vector.IsVersor() {
-			t.Error("Expected the vector to not have unitary length")
-		}
+		assert.False(vector.IsVersor())
 
 		versor, err := vector.ToVersor()
 
-		if !versor.IsVersor() {
-			t.Error("A versor should have unitary length")
-		}
-		if err != nil {
-			t.Error("Expected versor without error")
-		}
+		assert.True(versor.IsVersor())
+		assert.Nil(err)
 	})
 
 	t.Run("Can't be created from three zero components", func(t *testing.T) {
 		v, err := MakeVersor(0, 0, 0)
 
-		if v != nil {
-			t.Errorf("Want nil vector, but got %v", v)
-		}
-		if err != ErrZeroVersor {
-			t.Error("Expected error")
-		}
+		assert.Nil(v)
+		assert.NotNil(err)
 	})
 
 	t.Run("Can't create a versor from a zero vector", func(t *testing.T) {
 		v, err := MakeVector(0, 0, 0).ToVersor()
 
-		if v != nil {
-			t.Errorf("Want nil vector, but got %v", v)
-		}
-		if err != ErrZeroVersor {
-			t.Error("Expected error")
-		}
+		assert.Nil(v)
+		assert.NotNil(err)
 	})
 }
 
@@ -114,9 +90,7 @@ func TestVectorOpposite(t *testing.T) {
 		want = MakeVector(-1, -2, 3)
 	)
 
-	if got := v.Opposite(); !want.Equals(got) {
-		t.Errorf("Want vector %v, but got %v", want, got)
-	}
+	assert.True(t, want.Equals(v.Opposite()))
 }
 
 func TestVectorScale(t *testing.T) {
@@ -126,21 +100,19 @@ func TestVectorScale(t *testing.T) {
 		want   = MakeVector(3, 6, 9)
 	)
 
-	if got := vector.Scaled(scale); !want.Equals(got) {
-		t.Errorf("Want vector %v, but got %v", want, got)
-	}
+	assert.True(t, want.Equals(vector.Scaled(scale)))
 }
 
 func TestVectorParallelism(t *testing.T) {
+	assert := assert.New(t)
+
 	t.Run("parallel vectors", func(t *testing.T) {
 		var (
 			u = MakeVector(1, 2, 3)
 			v = MakeVector(2, 4, 6)
 		)
 
-		if !u.IsParallelTo(v) {
-			t.Errorf("Want %v and %v to be parallel", u, v)
-		}
+		assert.True(u.IsParallelTo(v))
 	})
 
 	t.Run("non parallel vectors", func(t *testing.T) {
@@ -149,22 +121,20 @@ func TestVectorParallelism(t *testing.T) {
 			v = MakeVector(5, 1, -9)
 		)
 
-		if u.IsParallelTo(v) {
-			t.Errorf("Want %v and %v to not be parallel", u, v)
-		}
+		assert.False(u.IsParallelTo(v))
 	})
 }
 
 func TestVectorPerpendicularity(t *testing.T) {
+	assert := assert.New(t)
+
 	t.Run("perpendicular vectors", func(t *testing.T) {
 		var (
 			u = MakeVector(1, 0, 0)
 			v = MakeVector(0, 1, 0)
 		)
 
-		if !u.IsPerpendicularTo(v) {
-			t.Errorf("Want %v and %v to be perpendicular", u, v)
-		}
+		assert.True(u.IsPerpendicularTo(v))
 	})
 
 	t.Run("non perpendicular vectors", func(t *testing.T) {
@@ -173,13 +143,13 @@ func TestVectorPerpendicularity(t *testing.T) {
 			v = MakeVector(2, 1, -5)
 		)
 
-		if u.IsPerpendicularTo(v) {
-			t.Errorf("Want %v and %v to not be perpendicular", u, v)
-		}
+		assert.False(u.IsPerpendicularTo(v))
 	})
 }
 
 func TestVectorOperations(t *testing.T) {
+	assert := assert.New(t)
+
 	var (
 		u = MakeVector(1, 2, 3)
 		v = MakeVector(4, 6, 8)
@@ -187,37 +157,23 @@ func TestVectorOperations(t *testing.T) {
 
 	t.Run("Vector addition", func(t *testing.T) {
 		want := MakeVector(5, 8, 11)
-
-		if got := u.Plus(v); !want.Equals(got) {
-			t.Errorf("Want vector %v, but got %v", want, got)
-		}
+		assert.True(want.Equals(u.Plus(v)))
 	})
 
 	t.Run("Vector subtraction", func(t *testing.T) {
 		want := MakeVector(-3, -4, -5)
-
-		if got := u.Minus(v); !want.Equals(got) {
-			t.Errorf("Want vector %v, but got %v", want, got)
-		}
+		assert.True(want.Equals(u.Minus(v)))
 	})
 
 	t.Run("Vector dot product", func(t *testing.T) {
 		want := 40.0
-
-		if got := u.DotTimes(v); !nums.FloatsEqual(want, got) {
-			t.Errorf("Want vector %f, but got %f", want, got)
-		}
+		assert.True(nums.FloatsEqual(want, u.DotTimes(v)))
 	})
 
 	t.Run("Vector cross product", func(t *testing.T) {
 		want := MakeVector(-2, 4, -2)
 
-		if got := u.CrossTimes(v); !want.Equals(got) {
-			t.Errorf("Want vector %v, but got %v", want, got)
-		}
-
-		if got := v.CrossTimes(u); !want.Opposite().Equals(got) {
-			t.Errorf("Want vector %v, but got %v", want.Opposite(), got)
-		}
+		assert.True(want.Equals(u.CrossTimes(v)))
+		assert.True(want.Opposite().Equals(v.CrossTimes(u)))
 	})
 }
