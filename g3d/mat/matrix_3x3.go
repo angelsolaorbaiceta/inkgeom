@@ -1,9 +1,9 @@
-package transf
+package mat
 
 import "github.com/angelsolaorbaiceta/inkgeom/g3d"
 
 var (
-	IdentityMatrix = MakeMatrix(1, 0, 0, 0, 1, 0, 0, 0, 1)
+	Identity = MakeMatrix(1, 0, 0, 0, 1, 0, 0, 0, 1)
 )
 
 type Matrix3x3 struct {

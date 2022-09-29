@@ -1,6 +1,9 @@
 package transf
 
-import "github.com/angelsolaorbaiceta/inkgeom/g3d"
+import (
+	"github.com/angelsolaorbaiceta/inkgeom/g3d"
+	"github.com/angelsolaorbaiceta/inkgeom/g3d/mat"
+)
 
 var (
 	AffineIdentity = &Affine{LinearIdentity, g3d.Zero}
@@ -22,7 +25,7 @@ func MakeTranslation(x, y, z float64) *Affine {
 func MakeRotationAround(radians float64, axis *g3d.Vector, center *g3d.Point) *Affine {
 	var (
 		rotation    = MakeRotation(radians, axis)
-		translation = IdentityMatrix.Minus(rotation.values).TimesProj(center)
+		translation = mat.Identity.Minus(rotation.values).TimesProj(center)
 	)
 
 	return &Affine{rotation, translation}

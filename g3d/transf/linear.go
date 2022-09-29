@@ -4,10 +4,11 @@ import (
 	"math"
 
 	"github.com/angelsolaorbaiceta/inkgeom/g3d"
+	"github.com/angelsolaorbaiceta/inkgeom/g3d/mat"
 )
 
 var (
-	LinearIdentity = &Linear{IdentityMatrix}
+	LinearIdentity = &Linear{mat.Identity}
 )
 
 // A Linear transformation that transforms vectors.
@@ -32,7 +33,7 @@ var (
 //
 // Alternatively, a generic linear transformation can be created using the MakeLinear.
 type Linear struct {
-	values *Matrix3x3
+	values *mat.Matrix3x3
 }
 
 // MakeLinear creates a new linear transformation from the given matrix values.
@@ -43,7 +44,7 @@ type Linear struct {
 //	| b  e  h |
 //	⌊ c  f  i ⌋
 func MakeLinear(a, d, g, b, e, h, c, f, i float64) *Linear {
-	return &Linear{MakeMatrix(a, d, g, b, e, h, c, f, i)}
+	return &Linear{mat.MakeMatrix(a, d, g, b, e, h, c, f, i)}
 }
 
 // MakeScaling creates a scaling linear transformation, where a vector is scaled by the
