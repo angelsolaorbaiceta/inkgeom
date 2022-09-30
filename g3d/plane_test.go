@@ -55,6 +55,10 @@ func TestPlaneCreationFromPointAndNormal(t *testing.T) {
 		assert.Nil(err)
 	})
 
+	t.Run("uses the point", func(t *testing.T) {
+		assert.True(p.Equals(plane.Point()))
+	})
+
 	t.Run("uses the normal vector", func(t *testing.T) {
 		assert.True(normalVec.Equals(plane.NormalVector()))
 	})
@@ -72,5 +76,81 @@ func TestPlaneCreationFromPointAndNormal(t *testing.T) {
 
 		assert.Nil(plane)
 		assert.Equal(ErrZeroVector, err)
+	})
+}
+
+func TestPlanePoint(t *testing.T) {
+	assert := assert.New(t)
+
+	t.Run("computes the point when a = 0", func(t *testing.T) {
+		var (
+			plane, _ = MakePlane(0, 1, 2, 4)
+			want     = MakePoint(0, -4, 0)
+		)
+
+		got := plane.Point()
+
+		assert.True(want.Equals(got))
+		assert.True(plane.ContainsPoint(got))
+	})
+
+	t.Run("computes the point when b = 0", func(t *testing.T) {
+		var (
+			plane, _ = MakePlane(1, 0, 2, 4)
+			want     = MakePoint(-4, 0, 0)
+		)
+
+		got := plane.Point()
+
+		assert.True(want.Equals(got))
+		assert.True(plane.ContainsPoint(got))
+	})
+
+	t.Run("computes the point when c = 0", func(t *testing.T) {
+		var (
+			plane, _ = MakePlane(1, 2, 0, 4)
+			want     = MakePoint(-4, 0, 0)
+		)
+
+		got := plane.Point()
+
+		assert.True(want.Equals(got))
+		assert.True(plane.ContainsPoint(got))
+	})
+
+	t.Run("computes the point when a = 0 and b = 0", func(t *testing.T) {
+		var (
+			plane, _ = MakePlane(0, 0, 2, 4)
+			want     = MakePoint(0, 0, -2)
+		)
+
+		got := plane.Point()
+
+		assert.True(want.Equals(got))
+		assert.True(plane.ContainsPoint(got))
+	})
+
+	t.Run("computes the point when a = 0 and c = 0", func(t *testing.T) {
+		var (
+			plane, _ = MakePlane(0, 2, 0, 4)
+			want     = MakePoint(0, -2, 0)
+		)
+
+		got := plane.Point()
+
+		assert.True(want.Equals(got))
+		assert.True(plane.ContainsPoint(got))
+	})
+
+	t.Run("computes the point when b = 0 and c = 0", func(t *testing.T) {
+		var (
+			plane, _ = MakePlane(2, 0, 0, 4)
+			want     = MakePoint(-2, 0, 0)
+		)
+
+		got := plane.Point()
+
+		assert.True(want.Equals(got))
+		assert.True(plane.ContainsPoint(got))
 	})
 }
