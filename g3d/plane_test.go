@@ -1,76 +1,76 @@
 package g3d
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
 
 func TestPlaneCreationFromParams(t *testing.T) {
+	assert := assert.New(t)
+
 	t.Run("from the a, b, c and d parameters", func(t *testing.T) {
 		var (
-			a          = 1.0
-			b          = 2.0
-			c          = 3.0
-			d          = 4.0
-			plane, err = MakePlane(a, b, c, d)
-			want       = MakeVector(a, b, c)
+			a                = 1.0
+			b                = 2.0
+			c                = 3.0
+			d                = 4.0
+			plane, err       = MakePlane(a, b, c, d)
+			wantNormalVec    = MakeVector(a, b, c)
+			wantNormalVer, _ = wantNormalVec.ToVersor()
 		)
 
 		t.Run("plane created without error", func(t *testing.T) {
-			if err != nil {
-				t.Errorf("Want no error, but got %v", err)
-			}
+			assert.Nil(err)
 		})
 
 		t.Run("computes the normal vector", func(t *testing.T) {
-			if got := plane.NormalVector(); !want.Equals(got) {
-				t.Errorf("Want normal vector %v, but got %v", want, got)
-			}
+			assert.True(wantNormalVec.Equals(plane.NormalVector()))
+		})
+
+		t.Run("computes the normal versor", func(t *testing.T) {
+			assert.True(wantNormalVer.Equals(plane.NormalVersor()))
 		})
 
 		t.Run("can't be created from a zero normal vector", func(t *testing.T) {
 			plane, err := MakePlane(0, 0, 0, 1)
 
-			if plane != nil {
-				t.Errorf("Want nil plane, but got %v", plane)
-			}
-			if err != ErrZeroVector {
-				t.Error("Expected error")
-			}
+			assert.Nil(plane)
+			assert.Equal(ErrZeroVector, err)
 		})
 	})
 }
 
 func TestPlaneCreationFromPointAndNormal(t *testing.T) {
+	assert := assert.New(t)
+
 	var (
-		p          = MakePoint(10, 20, 30)
-		n          = MakeVector(1, 1, 1)
-		plane, err = MakePlaneFromPointAndNormal(p, n)
+		p                = MakePoint(10, 20, 30)
+		normalVec        = MakeVector(1, 1, 1)
+		wantNormalVer, _ = normalVec.ToVersor()
+		plane, err       = MakePlaneFromPointAndNormal(p, normalVec)
 	)
 
 	t.Run("plane created without error", func(t *testing.T) {
-		if err != nil {
-			t.Errorf("Want no error, but got %v", err)
-		}
+		assert.Nil(err)
 	})
 
 	t.Run("uses the normal vector", func(t *testing.T) {
-		if got := plane.NormalVector(); !n.Equals(got) {
-			t.Errorf("Want normal vector %v, but got %v", n, got)
-		}
+		assert.True(normalVec.Equals(plane.NormalVector()))
+	})
+
+	t.Run("computes the normal versor", func(t *testing.T) {
+		assert.True(wantNormalVer.Equals(plane.NormalVersor()))
 	})
 
 	t.Run("contains the point", func(t *testing.T) {
-		if !plane.ContainsPoint(p) {
-			t.Error("Expected plane to contain point")
-		}
+		assert.True(plane.ContainsPoint(p))
 	})
 
 	t.Run("can't create with a zero length normal vector", func(t *testing.T) {
 		plane, err := MakePlaneFromPointAndNormal(p, Zero)
 
-		if plane != nil {
-			t.Errorf("Want nil plane, got %v", plane)
-		}
-		if err != ErrZeroVector {
-			t.Error("Expected error")
-		}
+		assert.Nil(plane)
+		assert.Equal(ErrZeroVector, err)
 	})
 }
