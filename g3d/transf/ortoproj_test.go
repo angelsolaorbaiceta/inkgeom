@@ -48,4 +48,17 @@ func TestOrtographicProjection(t *testing.T) {
 
 		assert.True(got.Equals(want))
 	})
+
+	t.Run("Projection in a plane", func(t *testing.T) {
+		var (
+			plane, _ = g3d.MakePlane(1, 1, 1, 0)
+			proj     = MakeOrtographic(plane)
+			orig     = g3d.MakePoint(6, 8, -5)
+			want     = g3d.MakePoint(3, 5, -8)
+		)
+
+		got := proj.Apply(orig)
+
+		assert.True(got.Equals(want))
+	})
 }
