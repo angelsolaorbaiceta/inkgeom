@@ -97,6 +97,11 @@ func (v *Vector) ToVersor() (*Vector, error) {
 	return MakeVersor(v.x, v.y, v.z)
 }
 
+// ToPoint returns a point with the same X, Y and Z projections as this vector.
+func (v *Vector) ToPoint() *Point {
+	return MakePoint(v.x, v.y, v.z)
+}
+
 // Opposite returns a new vector in the opposite direction as this one.
 func (v *Vector) Opposite() *Vector {
 	return MakeVector(-v.x, -v.y, -v.z)
