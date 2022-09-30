@@ -2,6 +2,12 @@ package g3d
 
 import "github.com/angelsolaorbaiceta/inkgeom/nums"
 
+var (
+	XYPlane, _ = MakePlane(0, 0, 1, 0)
+	XZPlane, _ = MakePlane(0, 1, 0, 0)
+	YZPlane, _ = MakePlane(1, 0, 0, 0)
+)
+
 // A Plane is a three dimensional straight surface defined by a point and a normal versor.
 // The plane is defined in its ax + by + cz + d = 0 form.
 type Plane struct {
@@ -12,7 +18,8 @@ type Plane struct {
 }
 
 // MakePlane creates a new plane give its a, b, c, and d components of the equation:
-// 	ax + by + cz + d = 0
+//
+//	ax + by + cz + d = 0
 //
 // Returns a ErrZeroVector if the resulting normal vector has zero length.
 func MakePlane(a, b, c, d float64) (*Plane, error) {
@@ -52,14 +59,17 @@ func MakePlaneFromPointAndNormal(p *Point, normal *Vector) (*Plane, error) {
 	}, nil
 }
 
+// The a parameter in the plane's equation.
 func (p *Plane) a() float64 {
 	return p.normalVector.x
 }
 
+// The b parameter in the plane's equation.
 func (p *Plane) b() float64 {
 	return p.normalVector.y
 }
 
+// The c parameter in the plane's equation.
 func (p *Plane) c() float64 {
 	return p.normalVector.z
 }
