@@ -46,7 +46,7 @@ func (v *Vector) IsVersor() bool {
 	return nums.IsCloseToOne(v.Length())
 }
 
-// Equals returns true if the projections of this and other projectable are equal.
+// Equals returns true if the projections of this and other vector are equal.
 func (v *Vector) Equals(other *Vector) bool {
 	return nums.FloatsEqual(v.x, other.x) &&
 		nums.FloatsEqual(v.y, other.y)
@@ -71,12 +71,12 @@ func (v *Vector) Scaled(factor float64) *Vector {
 	return MakeVector(v.x*factor, v.y*factor)
 }
 
-// Plus creates a new projectable adding this with other.
+// Plus creates a new vector adding this with other.
 func (v *Vector) Plus(other *Vector) *Vector {
 	return MakeVector(v.x+other.x, v.y+other.y)
 }
 
-// Minus creates a new projectable subtracting this with other.
+// Minus creates a new vector subtracting this with other.
 func (v *Vector) Minus(other *Vector) *Vector {
 	return MakeVector(v.x-other.x, v.y-other.y)
 }
@@ -89,6 +89,18 @@ func (v *Vector) DotTimes(other *Vector) float64 {
 // CrossTimes computes the cross product of this vector with other.
 func (v *Vector) CrossTimes(other *Vector) float64 {
 	return (v.x * other.y) - (v.y * other.x)
+}
+
+// AngleInRadsFromX returns the angle (in radians) between this vector and the X axis.
+// The returned angle is in the range [-π, π].
+func (v *Vector) AngleInRadsFromX() float64 {
+	var (
+		versor    = v.ToVersor()
+		value     = math.Acos(versor.DotTimes(IVersor))
+		crossProd = IVersor.CrossTimes(versor)
+	)
+
+	return math.Copysign(value, crossProd)
 }
 
 func computeLength(x, y float64) float64 {

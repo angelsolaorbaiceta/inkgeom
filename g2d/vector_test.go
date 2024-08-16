@@ -1,6 +1,7 @@
 package g2d
 
 import (
+	"math"
 	"testing"
 
 	"github.com/angelsolaorbaiceta/inkgeom/nums"
@@ -75,4 +76,46 @@ func TestVectorsCrossProduct(t *testing.T) {
 	p := MakeVector(1, 2).CrossTimes(MakeVector(3, 5))
 
 	assert.True(t, nums.FloatsEqual(p, -1.0))
+}
+
+func TestAngle(t *testing.T) {
+	t.Run("Angle of (1, 0) is 0", func(t *testing.T) {
+		angle := MakeVector(1, 0).AngleInRadsFromX()
+		assert.True(t, nums.FloatsEqual(angle, 0.0), "Expected 0, got %f", angle)
+	})
+
+	t.Run("Angle of (1, 1) is PI/4", func(t *testing.T) {
+		angle := MakeVector(1, 1).AngleInRadsFromX()
+		assert.True(t, nums.FloatsEqual(angle, math.Pi/4), "Expected PI/4, got %f", angle)
+	})
+
+	t.Run("Angle of (0, 1) is PI/2", func(t *testing.T) {
+		angle := MakeVector(0, 1).AngleInRadsFromX()
+		assert.True(t, nums.FloatsEqual(angle, math.Pi/2), "Expected PI/2, got %f", angle)
+	})
+
+	t.Run("Angle of (-1, 1) is 3*PI/4", func(t *testing.T) {
+		angle := MakeVector(-1, 1).AngleInRadsFromX()
+		assert.True(t, nums.FloatsEqual(angle, 3*math.Pi/4), "Expected 3*PI/4, got %f", angle)
+	})
+
+	t.Run("Angle of (-1, 0) is PI", func(t *testing.T) {
+		angle := MakeVector(-1, 0).AngleInRadsFromX()
+		assert.True(t, nums.FloatsEqual(angle, math.Pi), "Expected PI, got %f", angle)
+	})
+
+	t.Run("Angle of (-1, -1) is -3*PI/4", func(t *testing.T) {
+		angle := MakeVector(-1, -1).AngleInRadsFromX()
+		assert.True(t, nums.FloatsEqual(angle, -3*math.Pi/4), "Expected -3*PI/4, got %f", angle)
+	})
+
+	t.Run("Angle of (0, -1) is -PI/2", func(t *testing.T) {
+		angle := MakeVector(0, -1).AngleInRadsFromX()
+		assert.True(t, nums.FloatsEqual(angle, -math.Pi/2), "Expected -PI/2, got %f", angle)
+	})
+
+	t.Run("Angle of (1, -1) is -PI/4", func(t *testing.T) {
+		angle := MakeVector(1, -1).AngleInRadsFromX()
+		assert.True(t, nums.FloatsEqual(angle, -math.Pi/4), "Expected -PI/4, got %f", angle)
+	})
 }
