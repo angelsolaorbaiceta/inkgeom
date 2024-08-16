@@ -52,3 +52,9 @@ func (r *RefFrame) Cos() float64 {
 func (r *RefFrame) Sin() float64 {
 	return r.iVersor.DotTimes(JVersor)
 }
+
+// AngleInRadsFromX returns the angle in radians from the global frame's i versor.
+// The angle returned is in the range [-π, π].
+func (r *RefFrame) AngleInRadsFromX() float64 {
+	return r.iVersor.AngleInRadsFromX()
+}
