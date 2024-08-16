@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/angelsolaorbaiceta/inkgeom/nums"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCreateVector(t *testing.T) {
@@ -13,87 +14,65 @@ func TestCreateVector(t *testing.T) {
 	)
 
 	t.Run("has a X projection", func(t *testing.T) {
-		if got := v.X(); got != x {
-			t.Errorf("Want X = %f, got %f", x, got)
-		}
+		assert.Equal(t, x, v.X())
 	})
 
 	t.Run("has a Y projection", func(t *testing.T) {
-		if got := v.Y(); got != y {
-			t.Errorf("Want Y = %f, got %f", y, got)
-		}
+		assert.Equal(t, y, v.Y())
 	})
 }
 
 func TestVectorLength(t *testing.T) {
 	v := MakeVector(3, 4)
 
-	if !nums.FloatsEqual(v.Length(), 5.0) {
-		t.Error("Wrong vector norm")
-	}
+	assert.True(t, nums.FloatsEqual(v.Length(), 5.0))
 }
 
 func TestIsVersor(t *testing.T) {
 	v := MakeVector(1, 0)
 
-	if !v.IsVersor() {
-		t.Error("Vector expected to be versor")
-	}
+	assert.True(t, v.IsVersor())
 }
 
 func TestIsNotVersor(t *testing.T) {
 	v := MakeVector(1, 2)
 
-	if v.IsVersor() {
-		t.Error("Vector expected NOT to be versor")
-	}
+	assert.False(t, v.IsVersor())
 }
 
 func TestMakeVersor(t *testing.T) {
 	v := MakeVersor(1, 2)
 
-	if !v.IsVersor() {
-		t.Error("Vector expected to be versor")
-	}
+	assert.True(t, v.IsVersor())
 }
 
 func TestPerpendicular(t *testing.T) {
 	v := MakeVersor(1, 2)
 
-	if !v.Perpendicular().Equals(MakeVersor(-2, 1)) {
-		t.Error("Wrong perpendicular vector")
-	}
+	assert.True(t, v.Perpendicular().Equals(MakeVersor(-2, 1)))
 }
 
 /* Operations */
 func TestSumVectors(t *testing.T) {
 	v := MakeVector(1, 2).Plus(MakeVector(3, 4))
 
-	if !v.Equals(MakeVector(4, 6)) {
-		t.Error("Addition yielded wrong result")
-	}
+	assert.True(t, v.Equals(MakeVector(4, 6)))
 }
 
 func TestSubtractVectors(t *testing.T) {
 	v := MakeVector(1, 2).Minus(MakeVector(3, 5))
 
-	if !v.Equals(MakeVector(-2, -3)) {
-		t.Error("Subtraction yielded wrong result")
-	}
+	assert.True(t, v.Equals(MakeVector(-2, -3)))
 }
 
 func TestVectorsDotProduct(t *testing.T) {
 	p := MakeVector(1, 2).DotTimes(MakeVector(3, 5))
 
-	if !nums.FloatsEqual(p, 13.0) {
-		t.Error("Dot product yielded wrong result")
-	}
+	assert.True(t, nums.FloatsEqual(p, 13.0))
 }
 
 func TestVectorsCrossProduct(t *testing.T) {
 	p := MakeVector(1, 2).CrossTimes(MakeVector(3, 5))
 
-	if !nums.FloatsEqual(p, -1.0) {
-		t.Error("Cross product yielded wrong result")
-	}
+	assert.True(t, nums.FloatsEqual(p, -1.0))
 }
